@@ -16,7 +16,7 @@ func main() {
 	r := gin.New()
 	r.Use(gin.Logger())
 
-	r.POST("/cards-create", controllers.CreateCards)
+	r.GET("/cards-create", controllers.CreateCards)
 
 	r.Run(":" + port)
 }

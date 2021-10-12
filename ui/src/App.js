@@ -1,25 +1,27 @@
 import logo from './logo.svg';
 import './App.css';
 
+class Home extends React.Component {
+  render() {
+    return (
+      <div className="container">
+        <div className="col-xs-8 col-xs-offset-2 jumbotron text-center">
+          <h1>Jokeish</h1>
+          <p>A load of Dad jokes XD</p>
+          <p>Sign in to get access </p>
+          <a onClick={this.authenticate} className="btn btn-primary btn-lg btn-login btn-block">Sign In</a>
+        </div>
+      </div>
+    )
+  }
+}
+
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  if (this.loggedIn) {
+    return (<LoggedIn />);
+  } else {
+    return (<Home />);
+  }
 }
 
 export default App;
