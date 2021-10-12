@@ -1,11 +1,22 @@
 package main
 
 import (
-	"fmt"
+	"os"
+
+	"github.com/Htgotcode/Golang-Web-Application-Server/api/controllers"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	fmt.Println("The start of our project.")
-}
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
 
-// Test
+	r := gin.New()
+	r.Use(gin.Logger())
+
+	r.POST("/cards-create", controllers.CreateCards)
+
+	r.Run(":" + port)
+}
