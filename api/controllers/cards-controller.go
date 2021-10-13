@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 	"time"
 
@@ -38,7 +37,6 @@ func CreateCards(c *gin.Context) {
 
 	// assign the the auto generated ID to the primary key attribute
 	card.CardID = card.ID.Hex()
-	card.Bearing = "SomeBearing"
 	card.Brand = "SomeBrand"
 	card.Rarity = "Rare"
 	card.Set = "Pokemon"
@@ -47,8 +45,7 @@ func CreateCards(c *gin.Context) {
 	//insert the newly created object into mongodb
 	result, insertErr := cardCollection.InsertOne(ctx, card)
 	if insertErr != nil {
-		msg := fmt.Sprintf("Card item was not created")
-		c.JSON(http.StatusInternalServerError, gin.H{"error": msg})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Card item was not created"})
 		return
 	}
 	defer cancel()
