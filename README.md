@@ -3,6 +3,6 @@
 ## Tech Stack
 * Golang - backend language
 * ReactJS - UI 
-* MongoDB - database
+* CockroachDB - database
 * Microsoft Azure - hosting
 * Auth0 - authentication
