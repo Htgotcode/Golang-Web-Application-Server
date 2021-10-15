@@ -4,5 +4,5 @@
 * Golang - backend language
 * ReactJS - UI 
 * CockroachDB - database
-* Microsoft Azure - hosting
+* Google Cloud - hosting
 * Auth0 - authentication
