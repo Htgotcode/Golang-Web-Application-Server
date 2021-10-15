@@ -4,7 +4,6 @@ import (
 	"os"
 	"text/template"
 
-	"github.com/Htgotcode/Golang-Web-Application-Server/api/controllers"
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 )
@@ -32,8 +31,11 @@ func main() {
 	r.Group("/api")
 
 	r.GET("/", Handler)
-	r.GET("/card-sell", Handler)
-	r.POST("/cards-create", controllers.CreateCards)
+	r.GET("/card", Handler)
+	r.GET("/profile", Handler)
+	r.GET("/uploads", Handler)
+	r.GET("/market", Handler)
+	//r.POST("/cards-create", controllers.CreateCards)
 
 	r.Run(":" + port)
 }
