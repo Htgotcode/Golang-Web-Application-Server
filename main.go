@@ -4,6 +4,7 @@ import (
 	"os"
 	"text/template"
 
+	"github.com/Htgotcode/Golang-Web-Application-Server/api"
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 )
@@ -23,6 +24,8 @@ func main() {
 		port = "8080"
 	}
 
+	//database.ConnectDB()
+
 	r := gin.New()
 	r.Use(gin.Logger())
 
@@ -35,7 +38,8 @@ func main() {
 	r.GET("/profile", Handler)
 	r.GET("/uploads", Handler)
 	r.GET("/market", Handler)
-	//r.POST("/cards-create", controllers.CreateCards)
-
+	api.GetPokeCards()
+	//r.POST("/cards-create", database.connectDB())
 	r.Run(":" + port)
+	//database.TestDBSetup()
 }
