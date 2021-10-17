@@ -20,39 +20,127 @@ type Set struct {
 	Series       string `bson:"series"`
 	PrintedTotal uint   `bson:"printedTotal"`
 	Total        uint   `bson:"total"`
-	//Legalities 		hash		`bson:"legalities"`
+
+	Legalities struct {
+		Standard  string `bson:"standard"`
+		Expanded  string `bson:"expanded"`
+		Unlimited string `bson:"unlimited"`
+	} `bson:"legalities"`
+
 	PtcgoCode   string `bson:"ptcgoCode"`
 	ReleaseDate string `bson:"releaseDate"`
 	UpdatedAt   string `bson:"updatedAt"`
-	//Images 			hash		`bson:"images"`
+
+	Images struct {
+		Small string `bson:"small"`
+		Large string `bson:"large"`
+	} `bson:"images"`
 }
 
 type PokeCard struct {
-	ID           string            `bson:"id"`
-	Name         string            `bson:"name"`
-	Supertype    string            `bson:"supertype"`
-	Subtypes     []string          `bson:"subtypes"`
-	Level        string            `bson:"level"`
-	HP           uint              `bson:"hp"`
-	Types        []string          `bson:"types"`
-	EvolvesFrom  string            `bson:"evolvesFrom"`
-	EvolvesTo    []string          `bson:"evolvesTo"`
-	Rules        []string          `bson:"rules"`
-	AncientTrait map[string]string `bson:"ancientTrait"`
-	//Abilities    list(hash)			`bson:"abilities"`
-	//Attacks      list(hash)			`bson:"attacks"`
-	//Weaknesses   list(hash)			`bson:"weaknesses"`
-	//Resistances  list(hash)			`bson:"resistances"`
+	ID          string   `bson:"id"`
+	Name        string   `bson:"name"`
+	Supertype   string   `bson:"supertype"`
+	Subtypes    []string `bson:"subtypes"`
+	Level       string   `bson:"level"`
+	HP          uint     `bson:"hp"`
+	Types       []string `bson:"types"`
+	EvolvesFrom string   `bson:"evolvesFrom"`
+	EvolvesTo   []string `bson:"evolvesTo"`
+	Rules       []string `bson:"rules"`
+
+	AncientTrait struct {
+		Name string `bson:"name"`
+		Text string `bson:"text"`
+	} `bson:"ancientTrait"`
+
+	Abilities []struct {
+		Name string `bson:"name"`
+		Text string `bson:"text"`
+		Type string `bson:"type"`
+	} `bson:"abilities"`
+
+	Attacks []struct {
+		Cost                []string `bson:"cost"`
+		Name                string   `bson:"name"`
+		Text                string   `bson:"text"`
+		Damage              string   `bson:"damage"`
+		ConvertedEnergyCost int      `bson:"convertedEnergyCost"`
+	} `bson:"attacks"`
+
+	Weaknesses []struct {
+		Type  string `bson:"type"`
+		Value string `bson:"value"`
+	} `bson:"weaknesses"`
+
+	Resistances []struct {
+		Type  string `bson:"type"`
+		Value string `bson:"value"`
+	} `bson:"resistances"`
+
 	RetreatCost          []string `bson:"retreatCost"`
 	ConvertedRetreatCost uint     `bson:"convertedRetreatCost"`
-	//Set 		 hash				`bson:"set"`
+
+	Set struct {
+		ID           string `bson:"id"`
+		Name         string `bson:"name"`
+		Series       string `bson:"series"`
+		PrintedTotal uint   `bson:"printedTotal"`
+		Total        uint   `bson:"total"`
+
+		Legalities struct {
+			Standard  string `bson:"standard"`
+			Expanded  string `bson:"expanded"`
+			Unlimited string `bson:"unlimited"`
+		} `bson:"legalities"`
+
+		PtcgoCode   string `bson:"ptcgoCode"`
+		ReleaseDate string `bson:"releaseDate"`
+		UpdatedAt   string `bson:"updatedAt"`
+
+		Images struct {
+			Small string `bson:"small"`
+			Large string `bson:"large"`
+		} `bson:"images"`
+	} `bson:"set"`
+
 	Number                 string `bson:"number"`
 	Artist                 string `bson:"artist"`
 	Rarity                 string `bson:"rarity"`
 	FlavorText             string `bson:"flavorText"`
 	NationalPokedexNumbers []uint `bson:"nationalPokedexNumbers"`
-	//Legalities   hash				`bson:"legalities"`
-	//Images       hash				`bson:"images"`
-	//Tcgplayer    hash				`bson:"tcgplayer"`
-	//Cardmarket   hash				`bson:"cardmarket"`
+
+	Legalities struct {
+		Standard  string `bson:"standard"`
+		Expanded  string `bson:"expanded"`
+		Unlimited string `bson:"unlimited"`
+	} `bson:"legalities"`
+
+	Images struct {
+		Small string `bson:"small"`
+		Large string `bson:"large"`
+	} `bson:"images"`
+
+	Tcgplayer struct {
+		URL       string `bson:"url"`
+		UpdatedAt string `bson:"updatedAt"`
+
+		Prices struct {
+			AverageSellPrice float64 `bson:"averageSellPrice"`
+			LowPrice         float64 `bson:"lowPrice"`
+			TrendPrice       float64 `bson:"trendPrice"`
+			GermanProLow     float64 `bson:"germanProLow"`
+			SuggestedPrice   float64 `bson:"suggestedPrice"`
+			ReverseHoloSell  float64 `bson:"reverseHoloSell"`
+			ReverseHoloLow   float64 `bson:"reverseHoloLow"`
+			ReverseHoloTrend float64 `bson:"reverseHoloTrend"`
+			LowPriceExPlus   float64 `bson:"lowPriceExPlus"`
+			Avg1             float64 `bson:"avg1"`
+			Avg7             float64 `bson:"avg7"`
+			Avg30            float64 `bson:"avg30"`
+			ReverseHoloAvg1  float64 `bson:"reverseHoloAvg1"`
+			ReverseHoloAvg7  float64 `bson:"reverseHoloAvg7"`
+			ReverseHoloAvg30 float64 `bson:"reverseHoloAvg30"`
+		} `bson:"prices"`
+	} `bson:"cardmarket"`
 }
