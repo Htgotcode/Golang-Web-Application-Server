@@ -35,7 +35,6 @@ func main() {
 	r.GET("/profile", Handler)
 	r.GET("/uploads", Handler)
 	r.GET("/market", Handler)
-	//r.POST("/cards-create", controllers.CreateCards)
 
 	r.Run(":" + port)
 }
