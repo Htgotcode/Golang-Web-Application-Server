@@ -20,7 +20,7 @@ class Navigation extends React.Component {
                         <Nav.Link className="h4" href="/market">Market</Nav.Link>
                     </Nav>
                     <Nav>
-                        <Nav.Link className="text-white" href="/profile"><Image src="" width="30" height="30" alt="Profile Picture"/></Nav.Link>
+                        <Nav.Link className="text-white" href="/profile"><Image src="./logo192.png" width="30" height="30" alt="Profile Picture"/><br/>NAME GOES HERE</Nav.Link>
                     </Nav>
                     </Navbar.Collapse>
                 </Container>

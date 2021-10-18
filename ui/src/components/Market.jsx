@@ -1,5 +1,9 @@
 import React, { useState } from 'react'
 import MaterialIcon from 'material-icons-react';
+import Card from 'react-bootstrap/Card'
+import ListGroup from 'react-bootstrap/ListGroup'
+import Button from 'react-bootstrap/Button'
+
 
 const CARDS = [
   {ID: 1, Brand: 'Pokemon', Image: "./logo192.png", Url: "", Name: "Pikachu", Set: "Celebrations", Rarity: "Holo Rare - #005/025", SellingPrice: 100, UploadedAt: "2021-10-18", CardID: "1"},
@@ -26,7 +30,6 @@ function Market() {
 
     setName(keyword);
   };
-
   return (
     <div className="container p-0">
       <span className="align-middle"><MaterialIcon icon="search" size="tiny"/></span>
@@ -43,21 +46,26 @@ function Market() {
         <div className="row">
           {foundCard && foundCard.length > 0 ? (
             foundCard.map((card) => (
-              <div className="card" style={{width: 20 + 'rem' }}>
-                        <img className="card-img-top" src={card.Image} />
-                        <div className="card-body">
-                            <h1 className="card-title">{card.Name}</h1>
-                            <h2 className="card-text">text</h2>
-                            <ul className="list-group list-group-flush">
-                                <li className="list-group-item">{card.Brand}</li>
-                                <li className="list-group-item">{card.Set}</li>
-                                <li className="list-group-item">{card.Rarity}</li>
-                                <li className="list-group-item">R{card.SellingPrice}</li>
-                                <li className="list-group-item">{card.UploadedAt}</li>
-                                <li className="list-group-item"><a href={card.Url} target="_blank" rel="noopener noreferrer" className="card-link">Card Information</a></li>
-                            </ul>
-                        </div>
-                    </div>
+              <Card style={{ width: '18rem' }}>
+              <Card.Img variant="top" src={card.Image} />
+              <Card.Body>
+                <Card.Title>{card.Name}</Card.Title>
+                <Card.Text>
+                  Some quick example text to build on the card title and make up the bulk of
+                  the card's content.
+                </Card.Text>
+                  <ListGroup variant="flush">
+                  <ListGroup.Item>{card.Brand}</ListGroup.Item>
+                  <ListGroup.Item>{card.Set}</ListGroup.Item>
+                  <ListGroup.Item>{card.Rarity}</ListGroup.Item>
+                  <ListGroup.Item>R{card.SellingPrice}</ListGroup.Item>
+                  <ListGroup.Item>{card.UploadedAt}</ListGroup.Item>
+                  <ListGroup.Item>{card.Rarity}</ListGroup.Item>
+                </ListGroup>
+                <Card.Link href={card.Url}><Button variant="primary" >View Card</Button></Card.Link>
+              </Card.Body>
+            </Card>
+              
             ))
           ) : (
             <p>Pokemon not found.</p>
