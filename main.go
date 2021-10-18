@@ -1,11 +1,14 @@
 package main
 
 import (
+	"log"
 	"os"
 	"text/template"
 
+	"github.com/Htgotcode/Golang-Web-Application-Server/database"
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
 func Handler(c *gin.Context) {
@@ -23,7 +26,21 @@ func main() {
 		port = "8080"
 	}
 
-	//database.DBinstance()
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	MongoDb := os.Getenv("MongoURL")
+
+	client, ctx, cancel, err := database.ConnectDB(MongoDb)
+	if err != nil {
+		panic(err)
+	}
+
+	defer database.CloseConnection(client, ctx, cancel)
+
+	database.CheckConnection(client, ctx)
 
 	r := gin.New()
 	r.Use(gin.Logger())
@@ -37,7 +54,6 @@ func main() {
 	r.GET("/profile", Handler)
 	r.GET("/uploads", Handler)
 	r.GET("/market", Handler)
-	//api.GetPokeCards()
 
 	r.Run(":" + port)
 }

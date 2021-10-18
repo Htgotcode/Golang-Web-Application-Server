@@ -2,24 +2,28 @@ package models
 
 import (
 	"time"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type Card struct {
-	ID           string    `bson:"id"`
-	Brand        string    `json:"brand" validate:"required"`
-	Set          string    `json:"set" validate:"required"`
-	Rarity       string    `json:"rarity" validate:"required"`
-	SellingPrice uint      `json:"selling_price" validate:"required"`
-	UploadedAt   time.Time `json:"uploaded_at"`
-	CardID       string    `json:"card_id"`
+	ID           primitive.ObjectID `bson:"_id"`
+	Name         string             `bson:"name"`
+	Description  string             `bson:"description"`
+	Brand        string             `json:"brand" validate:"required"`
+	SetName      string             `json:"set_name" validate:"required"`
+	Rarity       string             `json:"rarity" validate:"required"`
+	SellingPrice uint               `json:"selling_price" validate:"required"`
+	UploadedAt   time.Time          `json:"uploaded_at"`
+	CardID       string             `json:"card_id"`
 }
 
 type Set struct {
-	ID           string `bson:"id"`
-	Name         string `bson:"name"`
-	Series       string `bson:"series"`
-	PrintedTotal uint   `bson:"printedTotal"`
-	Total        uint   `bson:"total"`
+	ID           primitive.ObjectID `bson:"_id"`
+	Name         string             `bson:"name"`
+	Series       string             `bson:"series"`
+	PrintedTotal uint               `bson:"printedTotal"`
+	Total        uint               `bson:"total"`
 
 	Legalities struct {
 		Standard  string `bson:"standard"`
@@ -38,16 +42,16 @@ type Set struct {
 }
 
 type PokeCard struct {
-	ID          string   `bson:"id"`
-	Name        string   `bson:"name"`
-	Supertype   string   `bson:"supertype"`
-	Subtypes    []string `bson:"subtypes"`
-	Level       string   `bson:"level"`
-	HP          uint     `bson:"hp"`
-	Types       []string `bson:"types"`
-	EvolvesFrom string   `bson:"evolvesFrom"`
-	EvolvesTo   []string `bson:"evolvesTo"`
-	Rules       []string `bson:"rules"`
+	ID          primitive.ObjectID `bson:"_id"`
+	Name        string             `bson:"name"`
+	Supertype   string             `bson:"supertype"`
+	Subtypes    []string           `bson:"subtypes"`
+	Level       string             `bson:"level"`
+	HP          uint               `bson:"hp"`
+	Types       []string           `bson:"types"`
+	EvolvesFrom string             `bson:"evolvesFrom"`
+	EvolvesTo   []string           `bson:"evolvesTo"`
+	Rules       []string           `bson:"rules"`
 
 	AncientTrait struct {
 		Name string `bson:"name"`
@@ -143,4 +147,17 @@ type PokeCard struct {
 			ReverseHoloAvg30 float64 `bson:"reverseHoloAvg30"`
 		} `bson:"prices"`
 	} `bson:"cardmarket"`
+}
+
+type ScryfallBulkData struct {
+	ID               primitive.ObjectID `bson:"id"`
+	URI              string             `bson:"uri"`
+	Type             string             `bson:"type"`
+	Name             string             `bson:"name"`
+	Description      string             `bson:"description"`
+	Download_uri     string             `bson:"download_uri"`
+	Updated_at       time.Time          `bson:"updated_at"`
+	Compressed_size  int                `bson:"compressed_size"`
+	Content_type     string             `bson:"content_type"`
+	Content_encoding string             `bson:"content_encoding"`
 }

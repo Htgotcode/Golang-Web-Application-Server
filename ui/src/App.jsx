@@ -8,6 +8,7 @@ import ProfilePage from './views/ProfilePage';
 import UploadsPage from './views/SellerUploadsPage';
 import MarketPage from './views/MarketPage';
 
+
 class App extends Component {
     render() {
       return(
