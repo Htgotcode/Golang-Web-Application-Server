@@ -34,7 +34,6 @@ func main() {
 	r.GET("/card", Handler)
 	r.GET("/profile", Handler)
 	r.GET("/uploads", Handler)
-	r.GET("/market", Handler)
 
 	r.Run(":" + port)
 }

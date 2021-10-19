@@ -6,9 +6,9 @@ import Button from 'react-bootstrap/Button'
 
 
 const CARDS = [
-  {ID: 1, Brand: 'Pokemon', Image: "./logo192.png", Url: "", Name: "Pikachu", Set: "Celebrations", Rarity: "Holo Rare - #005/025", SellingPrice: 100, UploadedAt: "2021-10-18", CardID: "1"},
-  {ID: 2, Brand: 'Pokemon', Image: "./logo192.png", Url: "", Name: "Riachu", Set: "Celebrations", Rarity: "Common", SellingPrice: 125, UploadedAt: "2021-10-18", CardID: "2"},
-  {ID: 3, Brand: 'Pokemon', Image: "./logo192.png", Url: "", Name: "Gastly", Set: "Celebrations", Rarity: "Rare", SellingPrice: 35, UploadedAt: "2021-10-18", CardID: "3"},
+  {ID: 1, Brand: 'Pokemon', Image: "./images/logo192.png", Url: "", Name: "Pikachu", Set: "Celebrations", Rarity: "Holo Rare - #005/025", SellingPrice: 100, UploadedAt: "2021-10-18", CardID: "1"},
+  {ID: 2, Brand: 'Pokemon', Image: "./images/logo192.png", Url: "", Name: "Riachu", Set: "Celebrations", Rarity: "Common", SellingPrice: 125, UploadedAt: "2021-10-18", CardID: "2"},
+  {ID: 3, Brand: 'Pokemon', Image: "./images/logo192.png", Url: "", Name: "Gastly", Set: "Celebrations", Rarity: "Rare", SellingPrice: 35, UploadedAt: "2021-10-18", CardID: "3"},
 ];
 
 function Market() {
@@ -19,10 +19,10 @@ function Market() {
     const keyword = e.target.value;
 
     if (keyword !== '') {
-      const results = CARDS.filter((card) => {
+      const RESULTS = CARDS.filter((card) => {
         return card.Name.toLowerCase().startsWith(keyword.toLowerCase());
       });
-      setFoundCard(results);
+      setFoundCard(RESULTS);
     } else {
       setFoundCard(CARDS);
       // If the text field is empty, show all cards

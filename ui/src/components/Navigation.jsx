@@ -10,17 +10,16 @@ class Navigation extends React.Component {
         return(
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
                 <Container>
-                    <Navbar.Brand href="/"><Image className="d-inline-block align-top" src="./logo.svg" width="40" height="40" alt="Logo"/></Navbar.Brand>
+                    <Navbar.Brand href="/"><Image className="d-inline-block align-top" src="./images/logo255.png" width="50" height="50" alt="Logo"/></Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
                         <Nav.Link className="h4" href="/">Home</Nav.Link>
                         <Nav.Link className="h4" href="/card">Card</Nav.Link>
                         <Nav.Link className="h4" href="/uploads">Uploads</Nav.Link>
-                        <Nav.Link className="h4" href="/market">Market</Nav.Link>
                     </Nav>
                     <Nav>
-                        <Nav.Link className="text-white" href="/profile"><Image src="./logo192.png" width="30" height="30" alt="Profile Picture"/><br/>NAME GOES HERE</Nav.Link>
+                        <Nav.Link className="text-white" href="/profile"><Image src="./images/logo192.png" width="30" height="30" alt="Profile Picture"/><br/>NAME GOES HERE</Nav.Link>
                     </Nav>
                     </Navbar.Collapse>
                 </Container>

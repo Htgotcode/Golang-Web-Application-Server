@@ -7,7 +7,6 @@ import Navigation from './components/Navigation';
 import CardPage from './views/CardPage';
 import ProfilePage from './views/ProfilePage';
 import UploadsPage from './views/SellerUploadsPage';
-import MarketPage from './views/MarketPage';
 
 class App extends Component {
     render() {
@@ -19,7 +18,6 @@ class App extends Component {
           <Route path="/card" component={CardPage}/>
           <Route path="/profile" component={ProfilePage}/>
           <Route path="/uploads" component={UploadsPage}/>
-          <Route path="/market" component={MarketPage}/>
           <Route component={Error}/>
         </Switch>
       </BrowserRouter>
