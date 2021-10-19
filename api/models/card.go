@@ -17,6 +17,7 @@ type Card struct {
 	UploadedAt   time.Time          `bson:"uploaded_at"`
 	CardID       string             `bson:"card_id"`
 	Image        string             `bson:"image_url"`
+	OwnerID      string             `bson:"owner_id"`
 }
 
 type Set struct {
