@@ -1,17 +1,20 @@
 package main
 
 import (
-	"fmt"
-	"log"
 	"os"
 	"text/template"
 
 	"github.com/Htgotcode/Golang-Web-Application-Server/database"
+	"github.com/Htgotcode/Golang-Web-Application-Server/routes"
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
-	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
 )
+
+var DB *mongo.Client = database.DBinstance()
+
+//var accountCollection *mongo.Collection = database.OpenCollection(DB, "account_db", "accounts")
+//var validate = validator.New()
 
 func Handler(c *gin.Context) {
 	tmpl, err := template.ParseFiles("./ui/build/index.html")
@@ -28,40 +31,6 @@ func main() {
 		port = "8080"
 	}
 
-	err := godotenv.Load(".env")
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
-
-	MongoDb := os.Getenv("MongoURL")
-
-	client, ctx, cancel, err := database.ConnectDB(MongoDb)
-	if err != nil {
-		panic(err)
-	}
-
-	defer database.CloseConnection(client, ctx, cancel)
-
-	database.CheckConnection(client, ctx)
-
-	accountsCollection := client.Database("account_db").Collection("accounts")
-
-	var account bson.M
-	if err = accountsCollection.FindOne(ctx, bson.M{}).Decode(&account); err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println(account)
-
-	cursor, err := accountsCollection.Find(ctx, bson.M{})
-	if err != nil {
-		log.Fatal(err)
-	}
-	var accounts []bson.M
-	if err = cursor.All(ctx, &accounts); err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println(accounts)
-
 	r := gin.New()
 	r.Use(gin.Logger())
 
@@ -74,6 +43,9 @@ func main() {
 	r.GET("/profile", Handler)
 	r.GET("/uploads", Handler)
 	r.GET("/market", Handler)
+
+	r.GET("/account", routes.GetAccount)
+	r.GET("/card/getCards", routes.GetCards)
 
 	r.Run(":" + port)
 }

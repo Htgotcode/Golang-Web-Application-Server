@@ -3,17 +3,58 @@ package database
 import (
 	"context"
 	"fmt"
+	"log"
+	"os"
 	"time"
 
+	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
-func OpenCollection(client *mongo.Client, collectionName string) *mongo.Collection {
+const connectionString = "Connection String"
 
-	var collection *mongo.Collection = client.Database("Golang-Web-ApplicationDB").Collection(collectionName)
-	//var collection *mongo.Collection = client.Database("accounts_db").Collection(collectionName)
+// Database Name
+const accountDBName = "accountDB"
+
+// Collection name
+const accountCollectionName = "accounts"
+
+// collection object/instance
+var collection *mongo.Collection
+
+func DBinstance() *mongo.Client {
+	err := godotenv.Load(".env")
+
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	MongoDb := os.Getenv("MongoURL")
+
+	client, err := mongo.NewClient(options.Client().ApplyURI(MongoDb))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+
+	defer cancel()
+	err = client.Connect(ctx)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Connected to MongoDB!")
+
+	return client
+}
+
+var Client *mongo.Client = DBinstance()
+
+func OpenCollection(client *mongo.Client, databaseName string, collectionName string) *mongo.Collection {
+
+	var collection *mongo.Collection = client.Database(databaseName).Collection(collectionName)
 
 	return collection
 }
@@ -46,60 +87,4 @@ func CloseConnection(client *mongo.Client, ctx context.Context,
 			panic(err)
 		}
 	}()
-}
-
-func InsertSingleDoc(client *mongo.Client, ctx context.Context, dataBase, col string, doc interface{}) (*mongo.InsertOneResult, error) {
-
-	collection := client.Database(dataBase).Collection(col)
-
-	result, err := collection.InsertOne(ctx, doc)
-	return result, err
-}
-
-func InsertManyDocs(client *mongo.Client, ctx context.Context, dataBase, col string, docs []interface{}) (*mongo.InsertManyResult, error) {
-
-	collection := client.Database(dataBase).Collection(col)
-
-	result, err := collection.InsertMany(ctx, docs)
-	return result, err
-}
-
-func DBquery(client *mongo.Client, ctx context.Context, dataBase, col string, query, field interface{}) (result *mongo.Cursor, err error) {
-	collection := client.Database(dataBase).Collection(col)
-
-	result, err = collection.Find(ctx, query,
-		options.Find().SetProjection(field))
-	return result, err
-}
-
-func UpdateSingleDoc(client *mongo.Client, ctx context.Context, dataBase, col string, filter, update interface{}) (result *mongo.UpdateResult, err error) {
-
-	collection := client.Database(dataBase).Collection(col)
-
-	result, err = collection.UpdateOne(ctx, filter, update)
-	return result, err
-}
-
-func UpdateManyDocs(client *mongo.Client, ctx context.Context, dataBase, col string, filter, update interface{}) (result *mongo.UpdateResult, err error) {
-
-	collection := client.Database(dataBase).Collection(col)
-
-	result, err = collection.UpdateMany(ctx, filter, update)
-	return result, err
-}
-
-func DeleteSingleDoc(client *mongo.Client, ctx context.Context, dataBase, col string, query interface{}) (result *mongo.DeleteResult, err error) {
-
-	collection := client.Database(dataBase).Collection(col)
-
-	result, err = collection.DeleteOne(ctx, query)
-	return result, err
-}
-
-func DeleteManyDocs(client *mongo.Client, ctx context.Context, dataBase, col string, query interface{}) (result *mongo.DeleteResult, err error) {
-
-	collection := client.Database(dataBase).Collection(col)
-
-	result, err = collection.DeleteMany(ctx, query)
-	return result, err
 }
