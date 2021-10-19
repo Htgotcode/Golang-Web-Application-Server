@@ -44,8 +44,14 @@ func main() {
 
 	database.CheckConnection(client, ctx)
 
-	accountsCollection := database.OpenCollection(client, "accounts")
-	fmt.Println(accountsCollection)
+	accountsCollection := client.Database("account_db").Collection("accounts")
+
+	var account bson.M
+	if err = accountsCollection.FindOne(ctx, bson.M{}).Decode(&account); err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(account)
+
 	cursor, err := accountsCollection.Find(ctx, bson.M{})
 	if err != nil {
 		log.Fatal(err)

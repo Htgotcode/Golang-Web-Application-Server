@@ -10,12 +10,13 @@ type Card struct {
 	ID           primitive.ObjectID `bson:"_id"`
 	Name         string             `bson:"name"`
 	Description  string             `bson:"description"`
-	Brand        string             `json:"brand" validate:"required"`
-	SetName      string             `json:"set_name" validate:"required"`
-	Rarity       string             `json:"rarity" validate:"required"`
-	SellingPrice uint               `json:"selling_price" validate:"required"`
-	UploadedAt   time.Time          `json:"uploaded_at"`
-	CardID       string             `json:"card_id"`
+	Brand        string             `bson:"brand" validate:"required"`
+	SetName      string             `bson:"set_name" validate:"required"`
+	Rarity       string             `bson:"rarity" validate:"required"`
+	SellingPrice uint               `bson:"selling_price" validate:"required"`
+	UploadedAt   time.Time          `bson:"uploaded_at"`
+	CardID       string             `bson:"card_id"`
+	Image        string             `bson:"image_url"`
 }
 
 type Set struct {

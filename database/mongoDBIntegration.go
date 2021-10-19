@@ -13,6 +13,7 @@ import (
 func OpenCollection(client *mongo.Client, collectionName string) *mongo.Collection {
 
 	var collection *mongo.Collection = client.Database("Golang-Web-ApplicationDB").Collection(collectionName)
+	//var collection *mongo.Collection = client.Database("accounts_db").Collection(collectionName)
 
 	return collection
 }
