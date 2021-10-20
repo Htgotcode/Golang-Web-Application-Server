@@ -3,7 +3,6 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image'
-import 'bootstrap/dist/css/bootstrap.css';
 
 class Navigation extends React.Component {
     render(){
@@ -15,11 +14,11 @@ class Navigation extends React.Component {
                     <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
                         <Nav.Link className="h4" href="/">Home</Nav.Link>
-                        <Nav.Link className="h4" href="/card">Card</Nav.Link>
+                        <Nav.Link className="h4" href="/card-add">Card</Nav.Link>
                         <Nav.Link className="h4" href="/uploads">Uploads</Nav.Link>
                     </Nav>
                     <Nav>
-                        <Nav.Link className="text-white" href="/profile"><Image src="./images/logo192.png" width="30" height="30" alt="Profile Picture"/><br/>NAME GOES HERE</Nav.Link>
+                        <Nav.Link className="text-white" href="/profile"><Image src="./images/logo255.png" width="30" height="30" alt="Profile Picture"/><br/>NAME GOES HERE</Nav.Link>
                     </Nav>
                     </Navbar.Collapse>
                 </Container>
