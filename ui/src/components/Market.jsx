@@ -1,26 +1,45 @@
-import React, { useState } from 'react'
-import MaterialIcon from 'material-icons-react';
-import Card from 'react-bootstrap/Card'
-import ListGroup from 'react-bootstrap/ListGroup'
-import Button from 'react-bootstrap/Button'
-
-
-const CARDS = [
-  {ID: 1, Brand: 'Pokemon', Image: "./images/logo192.png", Url: "", Name: "Pikachu", Set: "Celebrations", Rarity: "Holo Rare - #005/025", SellingPrice: 100, UploadedAt: "2021-10-18", CardID: "1"},
-  {ID: 2, Brand: 'Pokemon', Image: "./images/logo192.png", Url: "", Name: "Riachu", Set: "Celebrations", Rarity: "Common", SellingPrice: 125, UploadedAt: "2021-10-18", CardID: "2"},
-  {ID: 3, Brand: 'Pokemon', Image: "./images/logo192.png", Url: "", Name: "Gastly", Set: "Celebrations", Rarity: "Rare", SellingPrice: 35, UploadedAt: "2021-10-18", CardID: "3"},
-];
+import React, { useState, useEffect } from 'react';
+import { Search } from 'react-bootstrap-icons';
+import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup';
+import axios from "axios";
 
 function Market() {
+  const [CARDS, setCARDS] = useState([])
+  const [isLoading, setLoading] = useState(true);
+  const [Cart, setCart] = useState([]);
   const [Name, setName] = useState('');
   const [foundCard, setFoundCard] = useState(CARDS);
+  
+  useEffect(() => {
+    getCards();
+  }, []);
+
+  const getCards = () => {
+    axios.get('/card')
+      .then((response) => {
+      setCARDS(response.data);
+      setFoundCard(response.data);
+      setLoading(false);
+    });
+  };
+    const removeCard = (card) => {  
+        axios.delete(`/card${card._id}`,{headers: {'Content-Type': 'application/json'}, data: {_id: card._id}})
+            .then(response => {
+              console.log(response)
+      })
+    };
+  const addToCart = (card) => {
+    setCart([...Cart, card]);
+    alert(card.name +" Added to cart.");
+  };
 
   const filter = (e) => {
     const keyword = e.target.value;
 
     if (keyword !== '') {
       const RESULTS = CARDS.filter((card) => {
-        return card.Name.toLowerCase().startsWith(keyword.toLowerCase());
+        return card.name.toLowerCase().includes(keyword.toLowerCase());
       });
       setFoundCard(RESULTS);
     } else {
@@ -30,52 +49,74 @@ function Market() {
 
     setName(keyword);
   };
-  return (
-    <div className="container p-0">
-      <span className="align-middle"><MaterialIcon icon="search" size="tiny"/></span>
-      <span className="align-middle">
-      <input
-        type="search"
-        value={Name}
-        onChange={filter}
-        className="input"
-        placeholder="Search"
-        size="25"
-      /></span>
-      
-        <div className="row">
-          {foundCard && foundCard.length > 0 ? (
-            foundCard.map((card) => (
-              <Card style={{ width: '18rem' }}>
-              <Card.Img variant="top" src={card.Image} />
-              <Card.Body>
-                <Card.Title>{card.Name}</Card.Title>
-                <Card.Text>
-                  Some quick example text to build on the card title and make up the bulk of
-                  the card's content.
-                </Card.Text>
-                  <ListGroup variant="flush">
-                  <ListGroup.Item>{card.Brand}</ListGroup.Item>
-                  <ListGroup.Item>{card.Set}</ListGroup.Item>
-                  <ListGroup.Item>{card.Rarity}</ListGroup.Item>
-                  <ListGroup.Item>R{card.SellingPrice}</ListGroup.Item>
-                  <ListGroup.Item>{card.UploadedAt}</ListGroup.Item>
-                  <ListGroup.Item>{card.Rarity}</ListGroup.Item>
-                </ListGroup>
-                <Card.Link href={card.Url}><Button variant="primary" >View Card</Button></Card.Link>
-              </Card.Body>
-            </Card>
-              
-            ))
-          ) : (
-            <p>Pokemon not found.</p>
-          )}
+
+  if (isLoading){
+    return <div className="App">Loading...</div>;
+  } else {
+    return (
+      <div className="container p-0">
+        <span className="align-middle"><Search size={15}/>  </span>
+        <span className="align-middle">
+        <input
+          type="search"
+          value={Name}
+          onChange={filter}
+          className="input"
+          placeholder="Search name..."
+          size="80"
+        /></span>
+        <div className="container">
+          <div className="row">
+            {foundCard && foundCard.length > 0 ? (
+                  foundCard.map((card) => {
+                  return (
+                  <div className="col-3" key={card._id}>
+                        <Card className="m-1">
+                        <div className="">
+                          <Card.Img variant="top" src={card.imageurl} />
+                        </div>
+                        <Card.Body>
+                          <Card.Title>{card.name}</Card.Title>
+                          <Card.Text>
+                          {card.description}
+                          </Card.Text>
+                            <ListGroup variant="flush">
+                            <ListGroup.Item>{card.brand}</ListGroup.Item>
+                            <ListGroup.Item>{card.setname}</ListGroup.Item>
+                            <ListGroup.Item>{card.rarity}</ListGroup.Item>
+                            <ListGroup.Item>{card.sellingprice}</ListGroup.Item>
+                            <ListGroup.Item>{card.ownerid}</ListGroup.Item>
+                          </ListGroup>
+                          <input type ="submit" value="Add to cart" onClick={() => addToCart(card)}/>
+                          <input type ="submit" value="Delete" onClick={() => removeCard(card)}/>
+                        </Card.Body>
+                      </Card>  
+                    </div> 
+                  )
+                }
+              )
+            ) : (
+              <p>Card not found.</p>
+            )}
+          </div>
         </div>
-    </div>
-  );
+      </div>
+    );
+  }
+  
+}
+
+class GetCards extends React.Component {
+    render() {
+          return (
+            <div>
+            <Market />
+            </div>
+        );
+    }
 }
   
 
 
 
-export default Market
+export default GetCards
