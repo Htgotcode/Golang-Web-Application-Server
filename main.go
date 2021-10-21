@@ -41,7 +41,7 @@ func main() {
 	r.GET("/uploads", Handler)
 	r.GET("/market", Handler)
 
-	r.GET("/account", routes.GetAccountById)
+	r.GET("/account", routes.GetAccount)
 	r.GET("/card/getCards", routes.GetCards)
 	//r.GET("/account/:username/", routes.GetAccountByUsername)
 	//r.POST("/add-card", AddCard)

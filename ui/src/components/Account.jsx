@@ -9,91 +9,56 @@ import { Container } from 'react-bootstrap';
 function ViewAccount() {
     const [ACCOUNTS, setACCOUNTS] = useState([])
     const [isLoading, setLoading] = useState(true);
-    console.log(ACCOUNTS);
-    //const [Username, setUsername] = useState('');
 
     useEffect(() => {
       getAccounts();
     }, []);
 
-    console.log(ACCOUNTS)
-
     const getAccounts = () => {
       axios.get('/account')
         .then((response) => {
           setACCOUNTS(response.data);
-        setLoading(false);
+          setLoading(false);
       });
     };
-
-    console.log(ACCOUNTS)
 
     if (isLoading){
       return <div className="App">Loading...</div>;
     } else {
       return (
         <div className="container p-0">
-          <span className="align-middle"></span>
-          <div className="container">
-            <div>
               {ACCOUNTS.map((account) => {
                      return(
-                      <div>
-                      <Container> 
-                        {/* Account details */}
-                          {account}
-                      </Container>
-
-                      <Container>
-                          {/* purchase history */}
-                          <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>Brand</th>
-                                <th>SetName</th>
-                                <th>Rarity</th>
-                                <th>SellingPrice</th>
-                                <th>UploadedAt</th>
-                                <th>CardID</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {account}
-                            </tbody>
-                        </table>
-                      </Container>
-            
-                      <span className="align-middle"> <Container>
-                          {/* sale history */}
-                          <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>Brand</th>
-                                <th>SetName</th>
-                                <th>Rarity</th>
-                                <th>SellingPrice</th>
-                                <th>UploadedAt</th>
-                                <th>CardID</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {account}
-                            </tbody>
-                        </table>
-                      </Container> </span>  
-                    </div> 
+                       <div key={account._id}>
+                      <p key={account._id}>
+                          {account.purchaseHistory.Name}
+                      </p>
+                      <p key={account._id}>
+                          {account.purchaseHistory.Description}
+                      </p>
+                      <p key={account._id}>
+                          {account.purchaseHistory.Brand}
+                      </p>
+                      <p key={account._id}>
+                          {account.purchaseHistory.SetName}
+                      </p>
+                      <p key={account._id}>
+                          {account.purchaseHistory.Rarity}
+                      </p>
+                      <p key={account._id}>
+                          ${account.purchaseHistory.SellingPrice}
+                      </p>
+                      <p key={account._id}>
+                          {account.purchaseHistory.UploadedAt}
+                      </p>
+                      <p key={account._id}>
+                          {account.purchaseHistory.CardID}
+                      </p>
+                      </div>
                     );     
                   }
               ) 
             }
-            </div>
-          </div>
         </div>
       );
     } 

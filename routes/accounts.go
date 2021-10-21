@@ -75,7 +75,7 @@ func GetAccount(c *gin.Context) {
 
 	fmt.Println(account)
 
-	c.JSON(http.StatusOK, account)
+	c.IndentedJSON(http.StatusOK, account)
 }
 
 func GetAccountByUsername(c *gin.Context) {
