@@ -1,18 +1,16 @@
-import React, { Children, useState, useEffect } from 'react';
-import MaterialIcon from 'material-icons-react';
+import React, { useState, useEffect } from 'react';
+import { Search } from 'react-bootstrap-icons';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import axios from "axios";
-
 
 function Market() {
   const [CARDS, setCARDS] = useState([])
   const [isLoading, setLoading] = useState(true);
   const [Cart, setCart] = useState([]);
-  console.log(Cart);
   const [Name, setName] = useState('');
   const [foundCard, setFoundCard] = useState(CARDS);
-
+  
   useEffect(() => {
     getCards();
   }, []);
@@ -21,14 +19,14 @@ function Market() {
     axios.get('/card')
       .then((response) => {
       setCARDS(response.data);
-      setFoundCard(response.data)
+      setFoundCard(response.data);
       setLoading(false);
     });
   };
 
-  console.log(CARDS)
   const addToCart = (card) => {
     setCart([...Cart, card]);
+    alert(card.name +" Added to cart.");
   };
 
   const filter = (e) => {
@@ -36,7 +34,7 @@ function Market() {
 
     if (keyword !== '') {
       const RESULTS = CARDS.filter((card) => {
-        return card.name.toLowerCase().startsWith(keyword.toLowerCase());
+        return card.name.toLowerCase().includes(keyword.toLowerCase());
       });
       setFoundCard(RESULTS);
     } else {
@@ -52,24 +50,26 @@ function Market() {
   } else {
     return (
       <div className="container p-0">
-        <span className="align-middle"><MaterialIcon icon="search" size="tiny"/></span>
+        <span className="align-middle"><Search size={15}/>  </span>
         <span className="align-middle">
         <input
           type="search"
           value={Name}
           onChange={filter}
           className="input"
-          placeholder="Search"
-          size="40"
+          placeholder="Search name..."
+          size="80"
         /></span>
         <div className="container">
           <div className="row">
             {foundCard && foundCard.length > 0 ? (
                   foundCard.map((card) => {
-                    return (
+                  return (
                   <div className="col-3" key={card._id}>
                         <Card className="m-1">
-                        <Card.Img variant="top" src={card.imageurl} />
+                        <div className="">
+                          <Card.Img variant="top" src={card.imageurl} />
+                        </div>
                         <Card.Body>
                           <Card.Title>{card.name}</Card.Title>
                           <Card.Text>
@@ -82,16 +82,15 @@ function Market() {
                             <ListGroup.Item>{card.sellingprice}</ListGroup.Item>
                             <ListGroup.Item>{card.ownerid}</ListGroup.Item>
                           </ListGroup>
-                          {/* <input type ="submit" value="Add to cart" onClick={() => addToCart(card)}/> */}
+                          <input type ="submit" value="Add to cart" onClick={() => addToCart(card)}/>
                         </Card.Body>
-                        <input type ="submit" value="Add to cart" onClick={() => addToCart(card)}/>
                       </Card>  
                     </div> 
                   )
                 }
               )
             ) : (
-              <p>Pokemon not found.</p>
+              <p>Card not found.</p>
             )}
           </div>
         </div>

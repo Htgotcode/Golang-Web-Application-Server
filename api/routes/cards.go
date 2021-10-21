@@ -17,7 +17,6 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-var validateCard = validator.New()
 var cardCollection *mongo.Collection = database.OpenCollection(database.Client, "cards_db", "card_collection")
 var marketCollection *mongo.Collection = database.OpenCollection(database.Client, "marketplace_db", "marketplace_collection")
 var validate = validator.New()
@@ -26,6 +25,7 @@ func AddNewcard(c *gin.Context) {
 
 	var marketplaceCollection *mongo.Collection = database.OpenCollection(database.Client, "marketplace_db", "marketplace_collection")
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
+
 	var card models.Card
 
 	card.ID = primitive.NewObjectID()
@@ -47,8 +47,7 @@ func AddNewcard(c *gin.Context) {
 	result, insertErr := marketplaceCollection.InsertOne(ctx, card)
 
 	if insertErr != nil {
-		msg := fmt.Sprintf("Card item was not created")
-		c.JSON(http.StatusInternalServerError, gin.H{"error": msg})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Card item was not created"})
 		return
 	}
 
@@ -157,105 +156,24 @@ func GetCardById(c *gin.Context) {
 	c.JSON(http.StatusOK, card)
 }
 
-// func UpdateWaiter(c *gin.Context) {
+func GetPokemonCards(c *gin.Context) {
 
-// 	orderID := c.Params.ByName("id")
-// 	docID, _ := primitive.ObjectIDFromHex(orderID)
+	cardID := c.Params.ByName("_id")
+	docID, _ := primitive.ObjectIDFromHex(cardID)
 
-// 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
+	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 
-// 	type Waiter struct {
-// 		Server *string `json:"server"`
-// 	}
+	var card bson.M
 
-// 	var waiter Waiter
+	if err := cardCollection.FindOne(ctx, bson.M{"_id": docID}).Decode(&card); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		fmt.Println(err)
+		return
+	}
 
-// 	if err := c.BindJSON(&waiter); err != nil {
-// 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-// 		fmt.Println(err)
-// 		return
-// 	}
+	defer cancel()
 
-// 	result, err := cardCollection.UpdateOne(ctx, bson.M{"_id": docID},
-// 		bson.D{
-// 			{"$set", bson.D{{"server", waiter.Server}}},
-// 		},
-// 	)
+	fmt.Println(card)
 
-// 	if err != nil {
-// 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-// 		fmt.Println(err)
-// 		return
-// 	}
-
-// 	defer cancel()
-
-// 	c.JSON(http.StatusOK, result.ModifiedCount)
-
-// }
-
-//update the order
-// func UpdateOrder(c *gin.Context) {
-
-// 	orderID := c.Params.ByName("id")
-// 	docID, _ := primitive.ObjectIDFromHex(orderID)
-
-// 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
-
-// 	var order models.Order
-
-// 	if err := c.BindJSON(&order); err != nil {
-// 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-// 		fmt.Println(err)
-// 		return
-// 	}
-
-// 	validationErr := validate.Struct(order)
-// 	if validationErr != nil {
-// 		c.JSON(http.StatusBadRequest, gin.H{"error": validationErr.Error()})
-// 		fmt.Println(validationErr)
-// 		return
-// 	}
-
-// 	result, err := cardCollection.ReplaceOne(
-// 		ctx,
-// 		bson.M{"_id": docID},
-// 		bson.M{
-// 			"dish":   order.Dish,
-// 			"price":  order.Price,
-// 			"server": order.Server,
-// 			"table":  order.Table,
-// 		},
-// 	)
-
-// 	if err != nil {
-// 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-// 		fmt.Println(err)
-// 		return
-// 	}
-
-// 	defer cancel()
-
-// 	c.JSON(http.StatusOK, result.ModifiedCount)
-// }
-
-// //delete an order given the id
-// func DeleteOrder(c *gin.Context) {
-
-// 	orderID := c.Params.ByName("id")
-// 	docID, _ := primitive.ObjectIDFromHex(orderID)
-
-// 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
-
-// 	result, err := cardCollection.DeleteOne(ctx, bson.M{"_id": docID})
-
-// 	if err != nil {
-// 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-// 		fmt.Println(err)
-// 		return
-// 	}
-
-// 	defer cancel()
-
-// 	c.JSON(http.StatusOK, result.DeletedCount)
-// }
+	c.JSON(http.StatusOK, card)
+}

@@ -66,6 +66,10 @@ class AddCard extends React.Component {
       ownerid: this.state.ownerid,
     };
  
+    alert = () => {
+      alert("Card uploaded");
+    }
+
     axios.post(`/card-add`, card, {headers: {'Content-Type': 'application/json'}})
       .then(res => {
         console.log(res);
@@ -75,7 +79,7 @@ class AddCard extends React.Component {
  
   render() {
     return (
-      <div>
+      <div className="container">
         <Form onSubmit={this.handleSubmit}>
           <Form.Group className="mb-3" controlId="formName">
             <Form.Label>Card Name</Form.Label>
@@ -141,7 +145,7 @@ class AddCard extends React.Component {
             </Form.Text>
           </Form.Group>
 
-          <Button variant="primary" type="submit">
+          <Button variant="primary" type="submit" onClick={() => alert()}>
             Add
           </Button>
         </Form>
