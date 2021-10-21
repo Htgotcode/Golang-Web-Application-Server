@@ -211,25 +211,3 @@ func UpdateAccount(c *gin.Context) {
 
 // 	c.JSON(http.StatusOK, result.ModifiedCount)
 // }
-
-//delete an order given the id
-// func DeleteOrder(c *gin.Context) {
-
-// 	orderID := c.Params.ByName("id")
-// 	docID, _ := primitive.ObjectIDFromHex(orderID)
-
-// 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
-
-// 	result, err := orderCollection.DeleteOne(ctx, bson.M{"_id": docID})
-
-// 	if err != nil {
-// 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-// 		fmt.Println(err)
-// 		return
-// 	}
-
-// 	defer cancel()
-
-// 	c.JSON(http.StatusOK, result.DeletedCount)
-
-// }

@@ -30,30 +30,41 @@ function ViewAccount() {
               {ACCOUNTS.map((account) => {
                      return(
                        <div key={account._id}>
-                      <p key={account._id}>
-                          {account.purchaseHistory.Name}
-                      </p>
-                      <p key={account._id}>
-                          {account.purchaseHistory.Description}
-                      </p>
-                      <p key={account._id}>
-                          {account.purchaseHistory.Brand}
-                      </p>
-                      <p key={account._id}>
-                          {account.purchaseHistory.SetName}
-                      </p>
-                      <p key={account._id}>
-                          {account.purchaseHistory.Rarity}
-                      </p>
-                      <p key={account._id}>
-                          ${account.purchaseHistory.SellingPrice}
-                      </p>
-                      <p key={account._id}>
-                          {account.purchaseHistory.UploadedAt}
-                      </p>
-                      <p key={account._id}>
-                          {account.purchaseHistory.CardID}
-                      </p>
+                                <p>
+                                    {account.username}
+                                </p>
+                                <p>
+                                    {account.password}
+                                </p>
+                                <p>
+                                    {account.email}
+                                </p>
+                                
+                                {/*  */}
+                                <p>
+                                    {account.purchaseHistory.Name}
+                                </p>
+                                <p>
+                                    {account.purchaseHistory.Description}
+                                </p>
+                                <p>
+                                    {account.purchaseHistory.Brand}
+                                </p>
+                                <p>
+                                    {account.purchaseHistory.SetName}
+                                </p>
+                                <p>
+                                    {account.purchaseHistory.Rarity}
+                                </p>
+                                <p>
+                                    ${account.purchaseHistory.SellingPrice}
+                                </p>
+                                <p>
+                                    {account.purchaseHistory.UploadedAt}
+                                </p>
+                                <p>
+                                    {account.purchaseHistory.CardID}
+                                </p>
                       </div>
                     );     
                   }
