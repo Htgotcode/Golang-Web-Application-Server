@@ -3,12 +3,11 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 import {Button, Card, Row, Col} from 'react-bootstrap'
 
-const Account = ({accountData, setChangeWaiter, deleteSingleOrder, setChangeOrder}) => {
-
+const Account = ({accountData}) => {
     return (
         <Card>
             <Row>
-                <Col>ID:{ accountData !== undefined && accountData.id}</Col>
+                <Col>ID:{ accountData !== undefined && accountData._id}</Col>
                 <Col>Username:{ accountData !== undefined && accountData.username}</Col>
                 <Col>Password:{ accountData !== undefined && accountData.password}</Col>
                 <Col>Email: ${accountData !== undefined && accountData.email}</Col>
@@ -39,4 +38,4 @@ const Account = ({accountData, setChangeWaiter, deleteSingleOrder, setChangeOrde
 
 }
 
-export default Account
+export default RenderAccount

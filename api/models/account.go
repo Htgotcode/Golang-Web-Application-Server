@@ -11,7 +11,7 @@ type Account struct {
 	Username  string             `bson:"username"`
 	Password  string             `bson:"password"`
 	Email     string             `bson:"email"`
-	CreatedAt time.Time          `bson:"created_at"`
+	CreatedAt time.Time          `bson:"createdAt"`
 
 	PurchaseHistory []struct {
 		Name         string    `bson:"name"`

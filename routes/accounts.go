@@ -108,8 +108,10 @@ func GetAccountByUsername(c *gin.Context) {
 
 func GetAccountById(c *gin.Context) {
 
-	accountID := c.Params.ByName("_id")
-	docID, _ := primitive.ObjectIDFromHex(accountID)
+	//accountID := c.Params.ByName("_id")
+	//fmt.Println(accountID)
+	docID, _ := primitive.ObjectIDFromHex("616d8131ea99fc4e8f9806e1")
+	fmt.Println(docID)
 
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 
