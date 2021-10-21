@@ -2,12 +2,16 @@ package database
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 	"time"
 
 	"github.com/joho/godotenv"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
@@ -32,6 +36,7 @@ func DBinstance() *mongo.Client {
 	}
 
 	MongoDb := os.Getenv("MongoURL")
+	MongoDb := os.Getenv("MongoUrl")
 
 	client, err := mongo.NewClient(options.Client().ApplyURI(MongoDb))
 	if err != nil {
@@ -50,6 +55,7 @@ func DBinstance() *mongo.Client {
 	return client
 }
 
+//Client Database instance
 var Client *mongo.Client = DBinstance()
 
 func OpenCollection(client *mongo.Client, databaseName string, collectionName string) *mongo.Collection {
@@ -88,3 +94,61 @@ func CloseConnection(client *mongo.Client, ctx context.Context,
 		}
 	}()
 }
+
+func GetAllAccountsRoute(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Context-Type", "application/x-www-form-urlencoded")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	payload := GetAllAccounts()
+	json.NewEncoder(w).Encode(payload)
+}
+
+func GetAllAccounts() []primitive.M {
+	//accountsCollection := client.Database("account_db").Collection("accounts")
+
+	cur, err := collection.Find(context.Background(), bson.D{{}})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var results []primitive.M
+	for cur.Next(context.Background()) {
+		var result bson.M
+		e := cur.Decode(&result)
+		if e != nil {
+			log.Fatal(e)
+		}
+		results = append(results, result)
+
+	}
+
+	if err := cur.Err(); err != nil {
+		log.Fatal(err)
+	}
+
+	cur.Close(context.Background())
+	return results
+}
+
+// func registerAccount(account models.Account) {
+// 	//accountsCollection := client.Database("account_db").Collection("accounts")
+// 	insertResult, err := collection.InsertOne(context.Background(), account)
+
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+
+// 	fmt.Println("Inserted a Single Record ", insertResult.InsertedID)
+// }
+
+// func deleteOneAccount(account string) {
+// 	//accountsCollection := client.Database("account_db").Collection("accounts")
+// 	fmt.Println(account)
+// 	id, _ := primitive.ObjectIDFromHex(account)
+// 	filter := bson.M{"_id": id}
+// 	d, err := collection.DeleteOne(context.Background(), filter)
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+
+// 	fmt.Println("Deleted Document", d.DeletedCount)
+// }

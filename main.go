@@ -4,6 +4,7 @@ import (
 	"os"
 	"text/template"
 
+	"github.com/Htgotcode/Golang-Web-Application-Server/api/routes"
 	"github.com/Htgotcode/Golang-Web-Application-Server/database"
 	"github.com/Htgotcode/Golang-Web-Application-Server/routes"
 	"github.com/gin-gonic/contrib/static"
@@ -35,11 +36,20 @@ func main() {
 
 	r.Group("/api")
 
+	//GETS
 	r.GET("/", Handler)
-	r.GET("/card", Handler)
+	r.GET("/card-add", Handler)
+	r.GET("/all-cards-response", routes.GetCards)
+	r.GET("/all-cards", Handler)
 	r.GET("/profile", Handler)
-	r.GET("/uploads", Handler)
-	r.GET("/market", Handler)
+	r.GET("/card", routes.GetMarket)
+	r.GET("/cart", Handler)
+
+	//POSTS
+	r.POST("/card-add", routes.AddNewcard)
+
+	//DELETE
+	r.DELETE("/card:id", routes.RemoveCard)
 
 	r.GET("/account", routes.GetAccount)
 	r.GET("/card/getCards", routes.GetCards)
