@@ -4,4 +4,5 @@
 * Golang - backend language
 * ReactJS - UI 
 * MongoDB - database
-* Gin - Server & authentication
+* Gin - Server
+* Gin - Authentication
