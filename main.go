@@ -6,6 +6,7 @@ import (
 
 	"github.com/Htgotcode/Golang-Web-Application-Server/api/routes"
 	"github.com/Htgotcode/Golang-Web-Application-Server/database"
+	"github.com/Htgotcode/Golang-Web-Application-Server/routes"
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -49,6 +50,11 @@ func main() {
 
 	//DELETE
 	r.DELETE("/card:id", routes.RemoveCard)
+
+	r.GET("/account", routes.GetAccount)
+	r.GET("/card/getCards", routes.GetCards)
+	//r.GET("/account/:username/", routes.GetAccountByUsername)
+	//r.POST("/add-card", AddCard)
 
 	r.Run(":" + port)
 }

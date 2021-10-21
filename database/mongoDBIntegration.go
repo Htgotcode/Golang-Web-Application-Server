@@ -35,6 +35,7 @@ func DBinstance() *mongo.Client {
 		log.Fatal("Error loading .env file")
 	}
 
+	MongoDb := os.Getenv("MongoURL")
 	MongoDb := os.Getenv("MongoUrl")
 
 	client, err := mongo.NewClient(options.Client().ApplyURI(MongoDb))
@@ -93,84 +94,6 @@ func CloseConnection(client *mongo.Client, ctx context.Context,
 		}
 	}()
 }
-
-func InsertSingleDoc(client *mongo.Client, ctx context.Context, dataBase, col string, doc interface{}) (*mongo.InsertOneResult, error) {
-
-	collection := client.Database(dataBase).Collection(col)
-
-	result, err := collection.InsertOne(ctx, doc)
-	return result, err
-}
-
-func InsertManyDocs(client *mongo.Client, ctx context.Context, dataBase, col string, docs []interface{}) (*mongo.InsertManyResult, error) {
-
-	collection := client.Database(dataBase).Collection(col)
-
-	result, err := collection.InsertMany(ctx, docs)
-	return result, err
-}
-
-func DBquery(client *mongo.Client, ctx context.Context, dataBase, col string, query, field interface{}) (result *mongo.Cursor, err error) {
-	collection := client.Database(dataBase).Collection(col)
-
-	result, err = collection.Find(ctx, query,
-		options.Find().SetProjection(field))
-	return result, err
-}
-
-func UpdateSingleDoc(client *mongo.Client, ctx context.Context, dataBase, col string, filter, update interface{}) (result *mongo.UpdateResult, err error) {
-
-	collection := client.Database(dataBase).Collection(col)
-
-	result, err = collection.UpdateOne(ctx, filter, update)
-	return result, err
-}
-
-func UpdateManyDocs(client *mongo.Client, ctx context.Context, dataBase, col string, filter, update interface{}) (result *mongo.UpdateResult, err error) {
-
-	collection := client.Database(dataBase).Collection(col)
-
-	result, err = collection.UpdateMany(ctx, filter, update)
-	return result, err
-}
-
-func DeleteSingleDoc(client *mongo.Client, ctx context.Context, dataBase, col string, query interface{}) (result *mongo.DeleteResult, err error) {
-
-	collection := client.Database(dataBase).Collection(col)
-
-	result, err = collection.DeleteOne(ctx, query)
-	return result, err
-}
-
-func DeleteManyDocs(client *mongo.Client, ctx context.Context, dataBase, col string, query interface{}) (result *mongo.DeleteResult, err error) {
-
-	collection := client.Database(dataBase).Collection(col)
-
-	result, err = collection.DeleteMany(ctx, query)
-	return result, err
-}
-
-// func CreateAccount(w http.ResponseWriter, r *http.Request) {
-// 	w.Header().Set("Context-Type", "application/x-www-form-urlencoded")
-// 	w.Header().Set("Access-Control-Allow-Origin", "*")
-// 	w.Header().Set("Access-Control-Allow-Methods", "POST")
-// 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
-// 	var account models.Account
-// 	_ = json.NewDecoder(r.Body).Decode(&account)
-
-// 	registerAccount(account)
-// 	json.NewEncoder(w).Encode(account)
-// }
-
-// func DeleteAccount(w http.ResponseWriter, r *http.Request) {
-// 	w.Header().Set("Context-Type", "application/x-www-form-urlencoded")
-// 	w.Header().Set("Access-Control-Allow-Origin", "*")
-// 	w.Header().Set("Access-Control-Allow-Methods", "DELETE")
-// 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
-// 	params := mux.Vars(r)
-// 	deleteOneAccount(params["id"])
-// 	json.NewEncoder(w).Encode(params["id"])
-// }
 
 func GetAllAccountsRoute(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Context-Type", "application/x-www-form-urlencoded")
