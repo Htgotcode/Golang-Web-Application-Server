@@ -30,41 +30,75 @@ function ViewAccount() {
               {ACCOUNTS.map((account) => {
                      return(
                        <div key={account._id}>
+                                <h1>Account Details</h1>
                                 <p>
-                                    {account.username}
+                                    Username: {account.username}
                                 </p>
                                 <p>
-                                    {account.password}
+                                    Password: {account.password}
                                 </p>
                                 <p>
-                                    {account.email}
+                                    Email Address: {account.email}
                                 </p>
                                 
-                                {/*  */}
-                                <p>
-                                    {account.purchaseHistory.Name}
-                                </p>
-                                <p>
-                                    {account.purchaseHistory.Description}
-                                </p>
-                                <p>
-                                    {account.purchaseHistory.Brand}
-                                </p>
-                                <p>
-                                    {account.purchaseHistory.SetName}
-                                </p>
-                                <p>
-                                    {account.purchaseHistory.Rarity}
-                                </p>
-                                <p>
-                                    ${account.purchaseHistory.SellingPrice}
-                                </p>
-                                <p>
-                                    {account.purchaseHistory.UploadedAt}
-                                </p>
-                                <p>
-                                    {account.purchaseHistory.CardID}
-                                </p>
+                                {/* Purchase History */}
+                                <h2>Purchase History</h2>
+                                <table title="Purchase History" class="table table-striped">
+                                  <thead>
+                                      <tr>
+                                      <th>Name</th>
+                                      <th>Description</th>
+                                      <th>Brand</th>
+                                      <th>SetName</th>
+                                      <th>Rarity</th>
+                                      <th>SellingPrice</th>
+                                      <th>UploadedAt</th>
+                                      <th>CardID</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <tr>
+                                      <td>{account.purchaseHistory.Name}</td>
+                                      <td>{account.purchaseHistory.Description}</td>
+                                      <td>{account.purchaseHistory.Brand}</td>
+                                      <td>{account.purchaseHistory.SetName}</td>
+                                      <td>{account.purchaseHistory.Rarity}</td>
+                                      <td>{account.purchaseHistory.SellingPrice}</td>
+                                      <td>{account.purchaseHistory.UploadedAt}</td>
+                                      <td>{account.purchaseHistory.CardID}</td>
+                                      </tr>
+                                  </tbody>
+                                </table>
+
+                                {/* Sale History */}
+                                <h2>Sale History</h2>
+                                <table title="Sale History" class="table table-striped">
+                                <title>Sale History</title>
+                                  <thead>
+                                      <tr>
+                                      <th>Name</th>
+                                      <th>Description</th>
+                                      <th>Brand</th>
+                                      <th>SetName</th>
+                                      <th>Rarity</th>
+                                      <th>SellingPrice</th>
+                                      <th>UploadedAt</th>
+                                      <th>CardID</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <tr>
+                                      <td>{account.saleHistory.Name}</td>
+                                      <td>{account.saleHistory.Description}</td>
+                                      <td>{account.saleHistory.Brand}</td>
+                                      <td>{account.saleHistory.SetName}</td>
+                                      <td>{account.saleHistory.Rarity}</td>
+                                      <td>{account.saleHistory.SellingPrice}</td>
+                                      <td>{account.saleHistory.UploadedAt}</td>
+                                      <td>{account.saleHistory.CardID}</td>
+                                      </tr>
+                                  </tbody>
+                                </table>
                       </div>
                     );     
                   }

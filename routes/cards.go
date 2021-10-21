@@ -130,6 +130,26 @@ func GetCardById(c *gin.Context) {
 	c.JSON(http.StatusOK, card)
 }
 
+func RemoveCard(c *gin.Context) {
+
+	cardID := c.Params.ByName("_id")
+	docID, _ := primitive.ObjectIDFromHex(cardID)
+
+	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
+
+	result, err := cardCollection.DeleteOne(ctx, bson.M{"_id": docID})
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		fmt.Println(err)
+		return
+	}
+
+	defer cancel()
+
+	c.JSON(http.StatusOK, result.DeletedCount)
+}
+
 // func UpdateWaiter(c *gin.Context) {
 
 // 	orderID := c.Params.ByName("id")
@@ -210,25 +230,4 @@ func GetCardById(c *gin.Context) {
 // 	defer cancel()
 
 // 	c.JSON(http.StatusOK, result.ModifiedCount)
-// }
-
-// //delete an order given the id
-// func DeleteOrder(c *gin.Context) {
-
-// 	orderID := c.Params.ByName("id")
-// 	docID, _ := primitive.ObjectIDFromHex(orderID)
-
-// 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
-
-// 	result, err := cardCollection.DeleteOne(ctx, bson.M{"_id": docID})
-
-// 	if err != nil {
-// 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-// 		fmt.Println(err)
-// 		return
-// 	}
-
-// 	defer cancel()
-
-// 	c.JSON(http.StatusOK, result.DeletedCount)
 // }

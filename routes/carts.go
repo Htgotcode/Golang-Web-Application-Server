@@ -87,7 +87,7 @@ func GetCartById(c *gin.Context) {
 
 	var cart bson.M
 
-	if err := accountCollection.FindOne(ctx, bson.M{"_id": docID}).Decode(&cart); err != nil {
+	if err := cartCollection.FindOne(ctx, bson.M{"_id": docID}).Decode(&cart); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		fmt.Println(err)
 		return
@@ -159,7 +159,6 @@ func UpdateCart(c *gin.Context) {
 		ctx,
 		bson.M{"_id": docID},
 		bson.M{
-			"_id":   cart.ID,
 			"cards": cart.Cards,
 		},
 	)
