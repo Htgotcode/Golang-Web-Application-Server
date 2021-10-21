@@ -42,16 +42,19 @@ func main() {
 	r.GET("/all-cards", Handler)
 	r.GET("/profile", Handler)
 	r.GET("/card", routes.GetMarket)
-	r.GET("/cart", Handler)
 	r.GET("/account", routes.GetAccount)
 	r.GET("/cart-add", Handler)
+	r.GET("/cart", Handler)
+	r.GET("/cart-response", routes.GetCart)
 
 	//POSTS
 	r.POST("/card-add", routes.AddNewcard)
 	r.POST("/cart-create", routes.CreateCart)
+	r.POST("/cart-response/:userid", routes.GetCartByUserId)
 
 	//DELETE
 	r.DELETE("/card:id", routes.RemoveCard)
+	r.DELETE("/cart-response:id", routes.RemoveCart)
 
 	r.Run(":" + port)
 }

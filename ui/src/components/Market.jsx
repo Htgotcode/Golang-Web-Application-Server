@@ -6,6 +6,7 @@ import axios from "axios";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { Cart2 } from 'react-bootstrap-icons';
 
 function Market() {
   const [CARDS, setCARDS] = useState([]);
@@ -13,7 +14,8 @@ function Market() {
   const [Cart, setCart] = useState([]);
   const [Name, setName] = useState('');
   const [foundCard, setFoundCard] = useState(CARDS);
-  
+  var [cartCount, setCartCount] = useState(0);
+
   useEffect(() => {
     getCards();
   }, []);
@@ -35,19 +37,24 @@ function Market() {
     };
 
     const createCart = () => {
-      axios.post(`/cart-create`, { cards: Cart }, {headers: {'Content-Type': 'application/json'}})
-      .then(res => {
-        console.log(res);
-        console.log(res.data);
+      if(cartCount > 0){
+        axios.post(`/cart-create`, { userid: "test", cards: Cart }, {headers: {'Content-Type': 'application/json'}})
+          .then(res => {
+            console.log(res);
+            console.log(res.data);
       })
+      }
+      
     }
 
   const addToCart = (card) => {
     setCart((Cart) => [...Cart, card]);
+    setCartCount(cartCount + 1);
   };
 
   const clearCart = () => {
     setCart([]);
+    setCartCount(0);
     alert("Cart cleared.");
   };
 
@@ -72,6 +79,7 @@ function Market() {
   } else {
     return (
       <Container>
+        <Container>
         <span className="align-middle"><Search size={15}/>  </span>
         <span className="align-middle">
         <input
@@ -80,10 +88,11 @@ function Market() {
           onChange={filter}
           className="input"
           placeholder="Search name..."
-          size="80"
+          size="50"
         />    </span>
-         <span className="align-middle"><input type ="submit" value="Submit to cart" onClick={() => createCart()}/>   </span>
-         <span className="align-middle"><input type ="submit" value="Clear cart" onClick={() => clearCart()}/>    </span>
+        <span className="align-right"><Button input type ="submit" value="Clear cart" onClick={() => clearCart()}>Clear Cart</Button>    </span>
+        <span className="align-right"><a href="/cart"><Cart2 size={20} onClick={() => createCart()}/></a>    {cartCount}</span>
+        </Container>
             <Container className="mt-3">
               <Row>
                   {foundCard && foundCard.length > 0 ? (
