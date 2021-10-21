@@ -22,7 +22,7 @@ var cartCollection *mongo.Collection = database.OpenCollection(database.Client, 
 func CreateCart(c *gin.Context) {
 
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
-
+	defer cancel()
 	var cart models.Cart
 
 	if err := c.BindJSON(&cart); err != nil {
@@ -41,12 +41,10 @@ func CreateCart(c *gin.Context) {
 
 	result, insertErr := cartCollection.InsertOne(ctx, cart)
 	if insertErr != nil {
-		msg := fmt.Sprintf("Cart was not created")
-		c.JSON(http.StatusInternalServerError, gin.H{"error": msg})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Cart was not created"})
 		fmt.Println(insertErr)
 		return
 	}
-	defer cancel()
 
 	c.JSON(http.StatusOK, result)
 }
@@ -54,7 +52,7 @@ func CreateCart(c *gin.Context) {
 func GetCart(c *gin.Context) {
 
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
-
+	defer cancel()
 	var cart []bson.M
 
 	cursor, err := cartCollection.Find(ctx, bson.M{})
@@ -71,8 +69,6 @@ func GetCart(c *gin.Context) {
 		return
 	}
 
-	defer cancel()
-
 	fmt.Println(cart)
 
 	c.IndentedJSON(http.StatusOK, cart)
@@ -84,7 +80,7 @@ func GetCartById(c *gin.Context) {
 	docID, _ := primitive.ObjectIDFromHex(cartID)
 
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
-
+	defer cancel()
 	var cart bson.M
 
 	if err := cartCollection.FindOne(ctx, bson.M{"_id": docID}).Decode(&cart); err != nil {
@@ -92,8 +88,6 @@ func GetCartById(c *gin.Context) {
 		fmt.Println(err)
 		return
 	}
-
-	defer cancel()
 
 	fmt.Println(cart)
 
@@ -106,7 +100,7 @@ func UpdateCartOneItem(c *gin.Context) {
 	docID, _ := primitive.ObjectIDFromHex(cartID)
 
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
-
+	defer cancel()
 	var cart models.Cart
 
 	if err := c.BindJSON(&cart); err != nil {
@@ -127,8 +121,6 @@ func UpdateCartOneItem(c *gin.Context) {
 		return
 	}
 
-	defer cancel()
-
 	c.JSON(http.StatusOK, result.ModifiedCount)
 
 }
@@ -139,7 +131,7 @@ func UpdateCart(c *gin.Context) {
 	docID, _ := primitive.ObjectIDFromHex(orderID)
 
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
-
+	defer cancel()
 	var cart models.Cart
 
 	if err := c.BindJSON(&cart); err != nil {
@@ -168,8 +160,6 @@ func UpdateCart(c *gin.Context) {
 		fmt.Println(err)
 		return
 	}
-
-	defer cancel()
 
 	c.JSON(http.StatusOK, result.ModifiedCount)
 }

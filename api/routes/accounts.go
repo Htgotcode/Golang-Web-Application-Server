@@ -9,20 +9,17 @@ import (
 	"github.com/Htgotcode/Golang-Web-Application-Server/api/models"
 	"github.com/Htgotcode/Golang-Web-Application-Server/database"
 	"github.com/gin-gonic/gin"
-	"github.com/go-playground/validator/v10"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
-
-var validate = validator.New()
 
 var accountCollection *mongo.Collection = database.OpenCollection(database.Client, "account_db", "accounts")
 
 func AddAccount(c *gin.Context) {
 
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
-
+	defer cancel()
 	var account models.Account
 
 	if err := c.BindJSON(&account); err != nil {
@@ -41,12 +38,10 @@ func AddAccount(c *gin.Context) {
 
 	result, insertErr := accountCollection.InsertOne(ctx, account)
 	if insertErr != nil {
-		msg := fmt.Sprintf("Account was not created")
-		c.JSON(http.StatusInternalServerError, gin.H{"error": msg})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Account was not created"})
 		fmt.Println(insertErr)
 		return
 	}
-	defer cancel()
 
 	c.JSON(http.StatusOK, result)
 }
@@ -54,7 +49,7 @@ func AddAccount(c *gin.Context) {
 func GetAccount(c *gin.Context) {
 
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
-
+	defer cancel()
 	var account []bson.M
 
 	cursor, err := accountCollection.Find(ctx, bson.M{})
@@ -71,8 +66,6 @@ func GetAccount(c *gin.Context) {
 		return
 	}
 
-	defer cancel()
-
 	fmt.Println(account)
 
 	c.IndentedJSON(http.StatusOK, account)
@@ -83,7 +76,7 @@ func GetAccountByUsername(c *gin.Context) {
 	username := c.Params.ByName("username")
 
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
-
+	defer cancel()
 	var accounts []bson.M
 
 	cursor, err := accountCollection.Find(ctx, bson.M{"username": username})
@@ -99,8 +92,6 @@ func GetAccountByUsername(c *gin.Context) {
 		return
 	}
 
-	defer cancel()
-
 	fmt.Println(accounts)
 
 	c.JSON(http.StatusOK, accounts)
@@ -114,7 +105,7 @@ func GetAccountById(c *gin.Context) {
 	fmt.Println(docID)
 
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
-
+	defer cancel()
 	var account bson.M
 
 	if err := accountCollection.FindOne(ctx, bson.M{"_id": docID}).Decode(&account); err != nil {
@@ -122,8 +113,6 @@ func GetAccountById(c *gin.Context) {
 		fmt.Println(err)
 		return
 	}
-
-	defer cancel()
 
 	fmt.Println(account)
 
@@ -136,6 +125,8 @@ func UpdateAccount(c *gin.Context) {
 	docID, _ := primitive.ObjectIDFromHex(accountID)
 
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
+
+	defer cancel()
 
 	// type Waiter struct {
 	// 	Server *string `json:"server"`
@@ -160,8 +151,6 @@ func UpdateAccount(c *gin.Context) {
 		fmt.Println(err)
 		return
 	}
-
-	defer cancel()
 
 	c.JSON(http.StatusOK, result.ModifiedCount)
 

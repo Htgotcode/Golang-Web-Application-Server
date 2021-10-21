@@ -63,7 +63,7 @@ function ViewAccount() {
                                       <td>{account.purchaseHistory.Brand}</td>
                                       <td>{account.purchaseHistory.SetName}</td>
                                       <td>{account.purchaseHistory.Rarity}</td>
-                                      <td>{account.purchaseHistory.SellingPrice}</td>
+                                      <td>${account.purchaseHistory.SellingPrice}</td>
                                       <td>{account.purchaseHistory.UploadedAt}</td>
                                       <td>{account.purchaseHistory.CardID}</td>
                                       </tr>
@@ -93,7 +93,7 @@ function ViewAccount() {
                                       <td>{account.saleHistory.Brand}</td>
                                       <td>{account.saleHistory.SetName}</td>
                                       <td>{account.saleHistory.Rarity}</td>
-                                      <td>{account.saleHistory.SellingPrice}</td>
+                                      <td>${account.saleHistory.SellingPrice}</td>
                                       <td>{account.saleHistory.UploadedAt}</td>
                                       <td>{account.saleHistory.CardID}</td>
                                       </tr>

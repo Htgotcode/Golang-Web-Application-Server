@@ -36,7 +36,6 @@ func DBinstance() *mongo.Client {
 	}
 
 	MongoDb := os.Getenv("MongoURL")
-	MongoDb := os.Getenv("MongoUrl")
 
 	client, err := mongo.NewClient(options.Client().ApplyURI(MongoDb))
 	if err != nil {

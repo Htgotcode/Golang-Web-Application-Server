@@ -7,6 +7,7 @@ import Error from './components/Error';
 import Navigation from './components/Navigation';
 import CardPage from './views/CardPage';
 import CartPage from './views/CartPage';
+import ProfilePage from './views/ProfilePage';
 import AllCardsPage from './views/AllCardsPage';
 
 class App extends Component {
@@ -20,6 +21,7 @@ class App extends Component {
           <Route path="/cart" component={CartPage}/>
           <Route path="/card" component={CardPage}/>
           <Route path="/all-cards" component={AllCardsPage}/>
+          <Route path="/profile" component={ProfilePage}/>
           <Route component={Error}/>
         </Switch>
       </BrowserRouter>
