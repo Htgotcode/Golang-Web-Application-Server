@@ -4,6 +4,9 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import SSRProvider from 'react-bootstrap/SSRProvider';
+import ReactGA from 'react-ga';
+ReactGA.initialize('UA-210763128-1');
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 
 ReactDOM.render(
