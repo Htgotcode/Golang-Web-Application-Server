@@ -132,7 +132,7 @@ func GetCardById(c *gin.Context) {
 
 func RemoveCard(c *gin.Context) {
 
-	cardID := c.Params.ByName("_id")
+	cardID := c.Params.ByName("id")
 	docID, _ := primitive.ObjectIDFromHex(cardID)
 
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
