@@ -25,7 +25,6 @@ require (
 )
 
 require (
-	github.com/go-playground/validator/v10 v10.4.1 // indirect
 	github.com/go-stack/stack v1.8.0 // indirect
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/klauspost/compress v1.13.6 // indirect
@@ -41,6 +40,7 @@ require (
 
 require (
 	github.com/PokemonTCG/pokemon-tcg-sdk-go-v2 v0.1.0
+	github.com/go-playground/validator/v10 v10.4.1
 	github.com/joho/godotenv v1.3.0
 	golang.org/x/text v0.3.7 // indirect
 )
