@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Search } from 'react-bootstrap-icons';
 import Card from 'react-bootstrap/Card';
-import ListGroup from 'react-bootstrap/ListGroup';
+import Button from 'react-bootstrap/Button';
 import axios from "axios";
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 function Market() {
-  const [CARDS, setCARDS] = useState([])
+  const [CARDS, setCARDS] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [Cart, setCart] = useState([]);
   const [Name, setName] = useState('');
@@ -23,15 +26,29 @@ function Market() {
       setLoading(false);
     });
   };
+
     const removeCard = (card) => {  
         axios.delete(`/card${card._id}`,{headers: {'Content-Type': 'application/json'}, data: {_id: card._id}})
             .then(response => {
-              console.log(response)
+              console.log(response);
       })
     };
+
+    const createCart = () => {
+      axios.post(`/cart-create`, { cards: Cart }, {headers: {'Content-Type': 'application/json'}})
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      })
+    }
+
   const addToCart = (card) => {
-    setCart([...Cart, card]);
-    alert(card.name +" Added to cart.");
+    setCart((Cart) => [...Cart, card]);
+  };
+
+  const clearCart = () => {
+    setCart([]);
+    alert("Cart cleared.");
   };
 
   const filter = (e) => {
@@ -54,7 +71,7 @@ function Market() {
     return <div className="App">Loading...</div>;
   } else {
     return (
-      <div className="container p-0">
+      <Container>
         <span className="align-middle"><Search size={15}/>  </span>
         <span className="align-middle">
         <input
@@ -64,43 +81,40 @@ function Market() {
           className="input"
           placeholder="Search name..."
           size="80"
-        /></span>
-        <div className="container">
-          <div className="row">
-            {foundCard && foundCard.length > 0 ? (
-                  foundCard.map((card) => {
-                  return (
-                  <div className="col-3" key={card._id}>
-                        <Card className="m-1">
-                        <div className="">
-                          <Card.Img variant="top" src={card.imageurl} />
-                        </div>
-                        <Card.Body>
-                          <Card.Title>{card.name}</Card.Title>
-                          <Card.Text>
-                          {card.description}
-                          </Card.Text>
-                            <ListGroup variant="flush">
-                            <ListGroup.Item>{card.brand}</ListGroup.Item>
-                            <ListGroup.Item>{card.setname}</ListGroup.Item>
-                            <ListGroup.Item>{card.rarity}</ListGroup.Item>
-                            <ListGroup.Item>{card.sellingprice}</ListGroup.Item>
-                            <ListGroup.Item>{card.ownerid}</ListGroup.Item>
-                          </ListGroup>
-                          <input type ="submit" value="Add to cart" onClick={() => addToCart(card)}/>
-                          <input type ="submit" value="Delete" onClick={() => removeCard(card)}/>
-                        </Card.Body>
-                      </Card>  
-                    </div> 
-                  )
-                }
-              )
-            ) : (
-              <p>Card not found.</p>
-            )}
-          </div>
-        </div>
-      </div>
+        />    </span>
+         <span className="align-middle"><input type ="submit" value="Submit to cart" onClick={() => createCart()}/>   </span>
+         <span className="align-middle"><input type ="submit" value="Clear cart" onClick={() => clearCart()}/>    </span>
+            <Container className="mt-3">
+              <Row>
+                  {foundCard && foundCard.length > 0 ? (
+                        foundCard.map((card) => {
+                        return (
+
+                          <Col xs={4} md={4} lg={2} xl={2} xxl={2} sm={4} className="shadow rounded m-3" key={card._id}>
+                              <Card>
+                                <Card.Header as="h5">{card.name} - {card.brand}</Card.Header>
+                                <Card.Body>
+                                <Card.Img variant="top" src={card.imageurl} />
+                                <Card.Text>{card.description}</Card.Text>
+                                <Card.Text>{card.setname}</Card.Text>
+                                <Card.Text>{card.rarity}</Card.Text>
+                                <Card.Text>${card.sellingprice}</Card.Text>
+                                <Button type ="submit" value="Add to cart" onClick={() => addToCart(card)}>Add to Cart</Button>
+                                <span>      </span>
+                                <Button type ="submit" value="Delete" onClick={() => removeCard(card)}>Delete Card</Button>
+                                </Card.Body>
+                            </Card>  
+                          </Col> 
+                          )
+                      }
+                    )
+                  ) : (
+                    <p>Card not found.</p>
+                  )}
+              
+            </Row>
+          </Container>
+      </Container>
     );
   }
   

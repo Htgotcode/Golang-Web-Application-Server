@@ -123,7 +123,7 @@ class AddCard extends React.Component {
 
           <Form.Group className="mb-3" controlId="formSellingPrice">
             <Form.Label>Card Selling Price</Form.Label>
-            <Form.Control type="text" value={this.state.sellingprice} name="sellingprice" onChange={this.handleSellingPrice} placeholder="Enter selling price" required/>
+            <Form.Control type="number" value={this.state.sellingprice} name="sellingprice" onChange={this.handleSellingPrice} placeholder="Enter selling price" required/>
             <Form.Text className="text-muted">
               eg. 5.26
             </Form.Text>

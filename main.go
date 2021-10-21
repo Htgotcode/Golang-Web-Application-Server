@@ -44,9 +44,11 @@ func main() {
 	r.GET("/card", routes.GetMarket)
 	r.GET("/cart", Handler)
 	r.GET("/account", routes.GetAccount)
+	r.GET("/cart-add", Handler)
 
 	//POSTS
 	r.POST("/card-add", routes.AddNewcard)
+	r.POST("/cart-create", routes.CreateCart)
 
 	//DELETE
 	r.DELETE("/card:id", routes.RemoveCard)

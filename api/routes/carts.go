@@ -24,6 +24,12 @@ func CreateCart(c *gin.Context) {
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 	defer cancel()
 	var cart models.Cart
+	cart.ID = primitive.NewObjectID()
+
+	//should work but doesn't
+	for i := range cart.Cards {
+		cart.Cards[i].ID = primitive.NewObjectID()
+	}
 
 	if err := c.BindJSON(&cart); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -37,7 +43,6 @@ func CreateCart(c *gin.Context) {
 		fmt.Println(validationErr)
 		return
 	}
-	cart.ID = primitive.NewObjectID()
 
 	result, insertErr := cartCollection.InsertOne(ctx, cart)
 	if insertErr != nil {
