@@ -47,5 +47,8 @@ func main() {
 	//POSTS
 	r.POST("/card-add", routes.AddNewcard)
 
+	//DELETE
+	r.DELETE("/card:id", routes.RemoveCard)
+
 	r.Run(":" + port)
 }

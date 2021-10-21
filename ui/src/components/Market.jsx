@@ -23,7 +23,12 @@ function Market() {
       setLoading(false);
     });
   };
-
+    const removeCard = (card) => {  
+        axios.delete(`/card${card._id}`,{headers: {'Content-Type': 'application/json'}, data: {_id: card._id}})
+            .then(response => {
+              console.log(response)
+      })
+    };
   const addToCart = (card) => {
     setCart([...Cart, card]);
     alert(card.name +" Added to cart.");
@@ -83,6 +88,7 @@ function Market() {
                             <ListGroup.Item>{card.ownerid}</ListGroup.Item>
                           </ListGroup>
                           <input type ="submit" value="Add to cart" onClick={() => addToCart(card)}/>
+                          <input type ="submit" value="Delete" onClick={() => removeCard(card)}/>
                         </Card.Body>
                       </Card>  
                     </div> 

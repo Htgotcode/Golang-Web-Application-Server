@@ -83,7 +83,7 @@ class AddCard extends React.Component {
         <Form onSubmit={this.handleSubmit}>
           <Form.Group className="mb-3" controlId="formName">
             <Form.Label>Card Name</Form.Label>
-            <Form.Control type="text" value={this.state.name} name="name" onChange={this.handleName} placeholder="Enter card name" />
+            <Form.Control type="text" value={this.state.name} name="name" onChange={this.handleName} placeholder="Enter card name" required/>
             <Form.Text className="text-muted">
               eg. Pikachu
             </Form.Text>
@@ -91,7 +91,7 @@ class AddCard extends React.Component {
 
           <Form.Group className="mb-3" controlId="formDesc">
             <Form.Label>Card Description</Form.Label>
-            <Form.Control type="text" value={this.state.description} name="description" onChange={this.handleDescription} placeholder="Enter description" />
+            <Form.Control type="text" value={this.state.description} name="description" onChange={this.handleDescription} placeholder="Enter description" required/>
             <Form.Text className="text-muted">
               eg. A lightning type from the classic series.
             </Form.Text>
@@ -99,7 +99,7 @@ class AddCard extends React.Component {
 
           <Form.Group className="mb-3" controlId="formBrand">
             <Form.Label>Brand Name</Form.Label>
-            <Form.Control type="text" value={this.state.brand} name="brand" onChange={this.handleBrand} placeholder="Enter brand name" />
+            <Form.Control type="text" value={this.state.brand} name="brand" onChange={this.handleBrand} placeholder="Enter brand name" required/>
             <Form.Text className="text-muted">
               eg. Pokemon
             </Form.Text>
@@ -107,7 +107,7 @@ class AddCard extends React.Component {
 
           <Form.Group className="mb-3" controlId="formSetName">
             <Form.Label>Set Name</Form.Label>
-            <Form.Control type="text" value={this.state.setname} name="setname" onChange={this.handleSetName} placeholder="Enter set name" />
+            <Form.Control type="text" value={this.state.setname} name="setname" onChange={this.handleSetName} placeholder="Enter set name" required/>
             <Form.Text className="text-muted">
               eg. Celebrations
             </Form.Text>
@@ -115,7 +115,7 @@ class AddCard extends React.Component {
 
           <Form.Group className="mb-3" controlId="formRarity">
             <Form.Label>Rarity</Form.Label>
-            <Form.Control type="text"value={this.state.rarity} name="rarity" onChange={this.handleRarity} placeholder="Enter rarity" />
+            <Form.Control type="text"value={this.state.rarity} name="rarity" onChange={this.handleRarity} placeholder="Enter rarity" required/>
             <Form.Text className="text-muted">
               eg. Common
             </Form.Text>
@@ -123,7 +123,7 @@ class AddCard extends React.Component {
 
           <Form.Group className="mb-3" controlId="formSellingPrice">
             <Form.Label>Card Selling Price</Form.Label>
-            <Form.Control type="text" value={this.state.sellingprice} name="sellingprice" onChange={this.handleSellingPrice} placeholder="Enter selling price" />
+            <Form.Control type="text" value={this.state.sellingprice} name="sellingprice" onChange={this.handleSellingPrice} placeholder="Enter selling price" required/>
             <Form.Text className="text-muted">
               eg. 5.26
             </Form.Text>
@@ -131,7 +131,7 @@ class AddCard extends React.Component {
 
           <Form.Group className="mb-3" controlId="formImageURL">
             <Form.Label>Image URL</Form.Label>
-            <Form.Control type="text" value={this.state.imageurl} name="imageurl" onChange={this.handleImageURL} placeholder="Enter image url" />
+            <Form.Control type="text" value={this.state.imageurl} name="imageurl" onChange={this.handleImageURL} placeholder="Enter image url" required/>
             <Form.Text className="text-muted">
               eg. https://sixprizes.com/wp-content/uploads/pikachu-next-destinies-nde-39.jpg
             </Form.Text>
@@ -139,7 +139,7 @@ class AddCard extends React.Component {
 
           <Form.Group className="mb-3" controlId="formOwnerID">
             <Form.Label>Owner ID</Form.Label>
-            <Form.Control type="text" value={this.state.ownerid} name="ownerid" onChange={this.handleOwnerID} placeholder="Enter owner ID" />
+            <Form.Control type="text" value={this.state.ownerid} name="ownerid" onChange={this.handleOwnerID} placeholder="Enter owner ID" required/>
             <Form.Text className="text-muted">
               eg. Your personal ID MAKE THIS AUTOMATIC
             </Form.Text>

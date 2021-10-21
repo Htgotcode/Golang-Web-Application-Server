@@ -21,10 +21,12 @@ var cardCollection *mongo.Collection = database.OpenCollection(database.Client, 
 var marketCollection *mongo.Collection = database.OpenCollection(database.Client, "marketplace_db", "marketplace_collection")
 var validate = validator.New()
 
+//Card functions
 func AddNewcard(c *gin.Context) {
 
 	var marketplaceCollection *mongo.Collection = database.OpenCollection(database.Client, "marketplace_db", "marketplace_collection")
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
+	defer cancel()
 
 	var card models.Card
 
@@ -59,6 +61,7 @@ func AddNewcard(c *gin.Context) {
 func GetMarket(c *gin.Context) {
 
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
+	defer cancel()
 
 	var cards []bson.M
 
@@ -84,6 +87,7 @@ func GetMarket(c *gin.Context) {
 func GetCards(c *gin.Context) {
 
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
+	defer cancel()
 
 	var cards []bson.M
 
@@ -111,6 +115,7 @@ func GetCardsByBrand(c *gin.Context) {
 	brand := c.Params.ByName("brand")
 
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
+	defer cancel()
 
 	var cards []bson.M
 
@@ -140,6 +145,7 @@ func GetCardById(c *gin.Context) {
 	docID, _ := primitive.ObjectIDFromHex(cardID)
 
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
+	defer cancel()
 
 	var card bson.M
 
@@ -162,6 +168,7 @@ func GetPokemonCards(c *gin.Context) {
 	docID, _ := primitive.ObjectIDFromHex(cardID)
 
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
+	defer cancel()
 
 	var card bson.M
 
@@ -176,4 +183,24 @@ func GetPokemonCards(c *gin.Context) {
 	fmt.Println(card)
 
 	c.JSON(http.StatusOK, card)
+}
+
+func RemoveCard(c *gin.Context) {
+	cardID := c.Param("id")
+	docID, _ := primitive.ObjectIDFromHex(cardID)
+
+	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
+	defer cancel()
+
+	result, err := marketCollection.DeleteOne(ctx, bson.M{"_id": docID})
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		fmt.Println(err)
+		return
+	}
+
+	defer cancel()
+
+	c.IndentedJSON(http.StatusOK, result.DeletedCount)
 }
