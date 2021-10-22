@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, ViewList } from 'react-bootstrap-icons';
+import { Search } from 'react-bootstrap-icons';
 import Card from 'react-bootstrap/Card';
 import pokemon from 'pokemontcgsdk'
 import Form from 'react-bootstrap/Form';
@@ -7,8 +7,6 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Popover from 'react-bootstrap/Popover';
 import axios from 'axios';
 
 
@@ -28,7 +26,7 @@ function CardsBase() {
     }, [])
 
     const getAllCards = () => {
-      pokemon.card.where({ q:'name:charizard' })
+      pokemon.card.where({ q:'' })
       .then(response => {
         setPokemonCards(response.data); 
         setLoading(false);
@@ -58,10 +56,16 @@ function CardsBase() {
     };
   
     var uniqueMarketCards = marketCards.reduce( (acc, o) => (acc[o.name] = (acc[o.name] || 0)+1, acc), {} );
+    //Fix: For each to match card count causes render to call too many times. Parse into individaul card amount.
+    // for (let pokemonCard of pokemonCards) {
+    //   for (let marketCard of marketCards) {
+    //     if(pokemonCard.name.toLowerCase() == marketCard.name.toLowerCase() ){
+           
+    //     }
+    //   } 
+    // }
     console.log(uniqueMarketCards)
 
-    
-    
     if (isLoading){
       return <div className="App">Loading...</div>;
     } else {
@@ -86,7 +90,7 @@ function CardsBase() {
           <Container className="mt-3">
             <Row>
                 {pokemonCards.map((card) => {
-                if(card.name == uniqueMarketCards)
+                
                 return (
                     <Col xs={4} md={4} lg={2} xl={2} xxl={2} sm={4} className="shadow rounded m-3" key={card._id}>
                         <Card>

@@ -3,14 +3,13 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image'
-import { Cart2 } from 'react-bootstrap-icons';
 
 class Navigation extends React.Component {
     render(){
         return(
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
                 <Container>
-                    <Navbar.Brand href="/"><Image className="d-inline-block align-top" src="./images/logo255.png" width="40" height="40" alt="Logo"/></Navbar.Brand>
+                    <Navbar.Brand href="/"><Image className="" src="./images/logo255.png" width="40" height="40" alt="Logo"/></Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">

@@ -13,7 +13,6 @@ import CardPage from './views/CardPage';
 import CartPage from './views/CartPage';
 import ProfilePage from './views/ProfilePage';
 import AllCardsPage from './views/AllCardsPage';
-import CardListingPage from './views/CardListingPage';
 
 class App extends Component {
     render() {
@@ -27,7 +26,6 @@ class App extends Component {
           <Route path="/card" component={CardPage}/>
           <Route path="/all-cards" component={AllCardsPage}/>
           <Route path="/profile" component={ProfilePage}/>
-          <Route path="/card-listing" component={CardListingPage}/>
           <Route path="/cart-create" component={CartPage}/>
           <Route path="/cart-response" component={CartPage}/>
           <Route component={Error}/>

@@ -14,7 +14,8 @@ class AddCard extends React.Component {
       rarity: '',
       sellingprice: '',
       imageurl: '',
-      ownerid: '',
+      //Move to user authetication.
+      ownerid: '5468721352246870D12456',
     };
 
     this.handleName = this.handleName.bind(this);
@@ -26,6 +27,7 @@ class AddCard extends React.Component {
     this.handleImageURL = this.handleImageURL.bind(this);
     this.handleOwnerID = this.handleOwnerID.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.alert = this.alert.bind(this);
   }
 
  
@@ -66,19 +68,17 @@ class AddCard extends React.Component {
       imageurl: this.state.imageurl,
       ownerid: this.state.ownerid,
     };
- 
-    alert = () => {
-      alert("Card uploaded");
-    }
-
+   
     axios.post(`/card-add`, card, {headers: {'Content-Type': 'application/json'}})
       .then(res => {
         console.log(res);
         console.log(res.data);
       })
-      
   }
 
+  alert = () => {
+    alert("Card uploaded");
+  }
 
  
   render() {
@@ -105,7 +105,7 @@ class AddCard extends React.Component {
             <Form.Label>Brand Name</Form.Label>
             <Form.Control type="text" value={this.state.brand} name="brand" onChange={this.handleBrand} placeholder="Enter brand name" required/>
             <Form.Text className="text-muted">
-              eg. Pokemon
+              eg. Pokémon
             </Form.Text>
           </Form.Group>
 
@@ -143,9 +143,10 @@ class AddCard extends React.Component {
 
           <Form.Group className="mb-3" controlId="formOwnerID">
             <Form.Label>Owner ID</Form.Label>
-            <Form.Control type="text" value={this.state.ownerid} name="ownerid" onChange={this.handleOwnerID} placeholder="Enter owner ID" required/>
+            <Form.Control type="text" value={"5468721352246870D12456"} name="ownerid" onChange={this.handleOwnerID} placeholder="Enter owner ID" required disabled/>
             <Form.Text className="text-muted">
-              eg. Your personal ID MAKE THIS AUTOMATIC
+              {/*Fetch from logged in user.*/}
+              eg. Your personal ID
             </Form.Text>
           </Form.Group>
 

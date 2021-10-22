@@ -38,7 +38,7 @@ function Market() {
 
     const createCart = () => {
       if(cartCount > 0){
-        axios.post(`/cart-create`, { userid: "test", cards: Cart }, {headers: {'Content-Type': 'application/json'}})
+        axios.post(`/cart-create`, { userid: "John Doe", cards: Cart }, {headers: {'Content-Type': 'application/json'}})
           .then(res => {
             console.log(res);
             console.log(res.data);
@@ -108,6 +108,7 @@ function Market() {
                                 <Card.Text>{card.setname}</Card.Text>
                                 <Card.Text>{card.rarity}</Card.Text>
                                 <Card.Text>${card.sellingprice}</Card.Text>
+                                <Card.Text>{card.uploadedAt}</Card.Text>
                                 <Button type ="submit" value="Add to cart" onClick={() => addToCart(card)}>Add to Cart</Button>
                                 <span>      </span>
                                 <Button type ="submit" value="Delete" onClick={() => removeCard(card)}>Delete Card</Button>

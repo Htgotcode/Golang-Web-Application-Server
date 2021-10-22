@@ -79,18 +79,15 @@ function Cart() {
                 } 
             </div>
           </div>
-          
-      );
-      
-     
-    }else {
-      return(
-        <div className="App">
-          Cart is empty.
-        </div>
-      )
-  } 
-  }
+    );
+    } else {
+        return(
+          <div className="App">
+            Cart is empty.
+          </div>
+        )
+      } 
+    }
   }
   
   class RenderCart extends React.Component {
