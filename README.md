@@ -31,6 +31,6 @@ Additionally as the application development progressed, there were additional re
 
 
 ## Members:
-* Kyle Van Antwerpen - 21013527
-* Gilliam Van der Merwe - 21660409
+* Kyle van Antwerpen - 21013527
+* Gilliam van der Merwe - 21660409
 * Kevin Frew - 20742541
