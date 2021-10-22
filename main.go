@@ -54,6 +54,7 @@ var jwtMiddleWare *jwtmiddleware.JWTMiddleware
 
 func main() {
 
+	//middleware
 	jwtMiddleware := jwtmiddleware.New(jwtmiddleware.Options{
 		ValidationKeyGetter: func(token *jwt.Token) (interface{}, error) {
 			aud := os.Getenv("AUTH0_API_AUDIENCE")
@@ -121,6 +122,7 @@ func main() {
 	r.Run(":" + port)
 }
 
+//middleware
 func authMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// Get the client secret key

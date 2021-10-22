@@ -19,7 +19,7 @@ type Account struct {
 		Brand        string    `bson:"brand" validate:"required"`
 		SetName      string    `bson:"set_name" validate:"required"`
 		Rarity       string    `bson:"rarity" validate:"required"`
-		SellingPrice uint      `bson:"selling_price" validate:"required"`
+		SellingPrice int64     `bson:"selling_price" validate:"required"`
 		UploadedAt   time.Time `bson:"uploaded_at"`
 		CardID       string    `bson:"card_id"`
 	} `json:"purchaseHistory"`
@@ -30,7 +30,7 @@ type Account struct {
 		Brand        string    `bson:"brand" validate:"required"`
 		SetName      string    `bson:"set_name" validate:"required"`
 		Rarity       string    `bson:"rarity" validate:"required"`
-		SellingPrice uint      `bson:"selling_price" validate:"required"`
+		SellingPrice int64     `bson:"selling_price" validate:"required"`
 		UploadedAt   time.Time `bson:"uploaded_at"`
 		CardID       string    `bson:"card_id"`
 	} `json:"saleHistory"`

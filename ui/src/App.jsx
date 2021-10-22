@@ -12,6 +12,7 @@ import CardPage from './views/CardPage';
 import CartPage from './views/CartPage';
 import AllCardsPage from './views/AllCardsPage';
 import MarketPage from './views/MarketPage';
+import ProfilePage from './views/ProfilePage';
 const AUTH0_CLIENT_ID="xJpx6qZVNhbzuwsNse6gpcXt1oOjF1m6"
 const AUTH0_DOMAIN="dev-oapcbgti.us.auth0.com"
 const AUTH0_CALLBACK_URL=location.href
@@ -86,6 +87,7 @@ class App extends React.Component {
             <Route path="/cart" component={CartPage}/>
             <Route path="/card" component={CardPage}/>
             <Route path="/all-cards" component={AllCardsPage}/>
+            <Route path="/profile" component={ProfilePage}/>
             <Route component={Error}/>
           </Switch>
       </BrowserRouter>

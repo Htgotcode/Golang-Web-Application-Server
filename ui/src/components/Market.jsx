@@ -15,6 +15,7 @@ function Market() {
   const [Name, setName] = useState('');
   const [foundCard, setFoundCard] = useState(CARDS);
   var [cartCount, setCartCount] = useState(0);
+  var [Total, setTotal] = useState(0);
   
   useEffect(() => {
     getCards();
@@ -38,7 +39,7 @@ function Market() {
 
     const createCart = () => {
       if(cartCount > 0){
-        axios.post(`/cart-create`, { userid: "John Doe", cards: Cart }, {headers: {'Content-Type': 'application/json'}})
+        axios.post(`/cart-create`, { email: "johndoe@example.com", total: Number((Total).toFixed(2)), cards: Cart }, {headers: {'Content-Type': 'application/json'}})
           .then(res => {
             console.log(res);
             console.log(res.data);
@@ -50,11 +51,13 @@ function Market() {
   const addToCart = (card) => {
     setCart((Cart) => [...Cart, card]);
     setCartCount(cartCount + 1);
+    setTotal(Total + card.sellingprice);
   };
 
   const clearCart = () => {
     setCart([]);
     setCartCount(0);
+    setTotal(0);
     alert("Cart cleared.");
   };
 

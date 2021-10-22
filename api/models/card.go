@@ -13,9 +13,9 @@ type Card struct {
 	Brand        string             `bson:"brand"`
 	SetName      string             `bson:"set_name"`
 	Rarity       string             `bson:"rarity"`
-	SellingPrice string             `bson:"sellingprice"`
+	SellingPrice float64            `bson:"sellingprice"`
 	UploadedAt   time.Time          `bson:"uploaded_at"`
 	CardID       string             `bson:"card_id"`
 	ImageURL     string             `bson:"imageurl"`
-	OwnerID      string             `bson:"owner_id"`
+	Email        string             `bson:"email"`
 }

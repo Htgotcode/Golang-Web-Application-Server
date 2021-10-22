@@ -12,10 +12,10 @@ class AddCard extends React.Component {
       brand: '',
       setname: '',
       rarity: '',
-      sellingprice: '',
+      sellingprice: 0,
       imageurl: '',
       //Move to user authetication.
-      ownerid: '5468721352246870D12456',
+      email: "johndoe@example.com",
     };
 
     this.handleName = this.handleName.bind(this);
@@ -25,7 +25,7 @@ class AddCard extends React.Component {
     this.handleRarity = this.handleRarity.bind(this);
     this.handleSellingPrice = this.handleSellingPrice.bind(this);
     this.handleImageURL = this.handleImageURL.bind(this);
-    this.handleOwnerID = this.handleOwnerID.bind(this);
+    this.handleEmail = this.handleEmail.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.alert = this.alert.bind(this);
   }
@@ -52,8 +52,8 @@ class AddCard extends React.Component {
   handleImageURL = event => {
     this.setState({ imageurl: event.target.value });
   }
-  handleOwnerID = event => {
-    this.setState({ ownerid: event.target.value });
+  handleEmail = event => {
+    this.setState({ email: event.target.value });
   }
  
   handleSubmit = event => {
@@ -64,9 +64,9 @@ class AddCard extends React.Component {
       brand: this.state.brand,
       setname: this.state.setname,
       rarity: this.state.rarity,
-      sellingprice: this.state.sellingprice,
+      sellingprice: +(this.state.sellingprice),
       imageurl: this.state.imageurl,
-      ownerid: this.state.ownerid,
+      email: this.state.email,
     };
    
     axios.post(`/card-add`, card, {headers: {'Content-Type': 'application/json'}})
@@ -119,7 +119,7 @@ class AddCard extends React.Component {
 
           <Form.Group className="mb-3" controlId="formRarity">
             <Form.Label>Rarity</Form.Label>
-            <Form.Control type="text"value={this.state.rarity} name="rarity" onChange={this.handleRarity} placeholder="Enter rarity" required/>
+            <Form.Control type="text" value={this.state.rarity} name="rarity" onChange={this.handleRarity} placeholder="Enter rarity" required/>
             <Form.Text className="text-muted">
               eg. Common
             </Form.Text>
@@ -142,11 +142,11 @@ class AddCard extends React.Component {
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formOwnerID">
-            <Form.Label>Owner ID</Form.Label>
-            <Form.Control type="text" value={"5468721352246870D12456"} name="ownerid" onChange={this.handleOwnerID} placeholder="Enter owner ID" required disabled/>
+            <Form.Label>Email</Form.Label>
+            <Form.Control type="text" value={this.state.email} name="email" onChange={this.handleEmail} placeholder="" required disabled/>
             <Form.Text className="text-muted">
               {/*Fetch from logged in user.*/}
-              eg. Your personal ID
+              eg. Your email address
             </Form.Text>
           </Form.Group>
 
