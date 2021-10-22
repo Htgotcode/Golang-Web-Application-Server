@@ -4,28 +4,33 @@ import Card from 'react-bootstrap/Card';
 import pokemon from 'pokemontcgsdk'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import RenderCardListing from '../components/CardListing';
-import axios from 'axios';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Popover from 'react-bootstrap/Popover';
+import axios from 'axios';
+
 
 pokemon.configure({apiKey: '8c44560c-5a0a-4e9e-828a-898992ad6345'})
 
 function CardsBase() {
-    const [CARDS, setCARDS] = useState([])
-    const [CardList, setCardList] = useState([])
+    const [pokemonCards, setPokemonCards] = useState([])
+    const [marketCards, setMarketCards] = useState([])
+    const [amountAvailable, setAmountAvailable] = useState(0)
     const [isLoading, setLoading] = useState(true);
     const [Name, setName] = useState('');
     
+    //Call const arrow functions when parent function is called.
     useEffect(() => {
       getAllCards();
+      getCards();
     }, [])
 
     const getAllCards = () => {
-      pokemon.card.where({ q:'' })
+      pokemon.card.where({ q:'name:charizard' })
       .then(response => {
-        setCARDS(response.data); 
+        setPokemonCards(response.data); 
         setLoading(false);
     })
   };
@@ -38,42 +43,25 @@ function CardsBase() {
       e.preventDefault();
       pokemon.card.where({ q:'name:'+Name, pageSize: 50 })
         .then(response => {
-            setCARDS(response.data); 
+            setPokemonCards(response.data); 
             setLoading(false);
       })
     }
+
+
+    //Match market cards with full pokemon database
+    const getCards = () => {
+      axios.get('/card')
+        .then((response) => {
+          setMarketCards(response.data);
+      });
+    };
+  
+    var uniqueMarketCards = marketCards.reduce( (acc, o) => (acc[o.name] = (acc[o.name] || 0)+1, acc), {} );
+    console.log(uniqueMarketCards)
+
     
-    const createCardListing = () => {
-      if(cardListingCount > 0){
-        axios.post(`/card-listing-add`, {cards: CardList }, {headers: {'Content-Type': 'application/json'}})
-          .then(res => {
-            console.log(res);
-            console.log(res.data);
-      })
-      }
-      
-    }
-
-    const addToCardListings = (card) => {
-      setCart((CardList) => [...CardList, card]);
-      setCartCount(cardListingCount + 1);
-    };
-
-    const clearCardListings = () => {
-      setCart([]);
-      setCardListCount(0);
-      alert("Card Listing cleared.");
-    };
-
-    // const addCardListing = (card) => {
-      
-    //   axios.post(`/card-listing-add`, card._id, {headers: {'Content-Type': 'application/json'}})
-    //   .then(res => {
-    //     console.log(res);
-    //     console.log(res.data);
-    //   })
-    // }
-
+    
     if (isLoading){
       return <div className="App">Loading...</div>;
     } else {
@@ -97,17 +85,15 @@ function CardsBase() {
 
           <Container className="mt-3">
             <Row>
-                {CARDS.map((card) => {
+                {pokemonCards.map((card) => {
+                if(card.name == uniqueMarketCards)
                 return (
                     <Col xs={4} md={4} lg={2} xl={2} xxl={2} sm={4} className="shadow rounded m-3" key={card._id}>
-                      
-                          <Card>
-                          <Card.Header as="h5">{card.name}</Card.Header>
-                          <Card.Link href="#">
+                        <Card>
+                          <Card.Header as="h5">{card.name} - {amountAvailable} in Market</Card.Header>
                           <Card.Body>
-                          <Card.Img variant="top" src={card.images.small} />
+                          <Card.Img variant="top" src={card.images.small}  />
                           </Card.Body>
-                          </Card.Link>
                       </Card>  
                     </Col> 
                     )

@@ -28,6 +28,7 @@ function Cart() {
       console.log(res);
       console.log(res.data);
     })
+    alert("Email sent to relevant card owners.")
   };
   
   

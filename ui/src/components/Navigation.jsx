@@ -14,6 +14,7 @@ class Navigation extends React.Component {
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
+                        <Nav.Link className="h4" href="/">Market</Nav.Link>
                         <Nav.Link className="h4" href="/card-add">Upload Card</Nav.Link>
                         <Nav.Link className="h4" href="/all-cards">All Cards</Nav.Link>
                     </Nav>
