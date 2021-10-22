@@ -28,6 +28,8 @@ class App extends Component {
           <Route path="/all-cards" component={AllCardsPage}/>
           <Route path="/profile" component={ProfilePage}/>
           <Route path="/card-listing" component={CardListingPage}/>
+          <Route path="/cart-create" component={CartPage}/>
+          <Route path="/cart-response" component={CartPage}/>
           <Route component={Error}/>
         </Switch>
       </BrowserRouter>

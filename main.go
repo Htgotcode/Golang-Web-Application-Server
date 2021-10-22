@@ -14,6 +14,7 @@ import (
 var DB *mongo.Client = database.DBinstance()
 
 func Handler(c *gin.Context) {
+
 	tmpl, err := template.ParseFiles("./ui/build/index.html")
 	if err != nil {
 		panic(err)
@@ -23,6 +24,7 @@ func Handler(c *gin.Context) {
 }
 
 func main() {
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
@@ -33,8 +35,6 @@ func main() {
 
 	r.Use(static.Serve("/", static.LocalFile("./ui/build", true)))
 
-	r.Group("/api")
-
 	//GETS
 	r.GET("/", Handler)
 	r.GET("/card-add", Handler)
@@ -42,17 +42,25 @@ func main() {
 	r.GET("/all-cards", Handler)
 	r.GET("/profile", Handler)
 	r.GET("/card", routes.GetMarket)
-	r.GET("/cart", Handler)
 	r.GET("/account", routes.GetAccount)
 	//r.GET("/card-listing-name", routes.GetCardListingsByName)
 	r.GET("/card-listing", Handler)
+  r.GET("/cart-add", Handler)
+	r.GET("/cart", Handler)
+	r.GET("/cart-response", routes.GetCart)
 
 	//POSTS
 	r.POST("/card-add", routes.AddNewcard)
 	r.POST("/card-listing-add", routes.CreateCardList)
+  
+	//POSTS
+	r.POST("/card-add", routes.AddNewcard)
+	r.POST("/cart-create", routes.CreateCart)
+	r.POST("/cart-response/:userid", routes.GetCartByUserId)
 
 	//DELETE
 	r.DELETE("/card:id", routes.RemoveCard)
+	r.DELETE("/cart-response:id", routes.RemoveCart)
 
 	r.Run(":" + port)
 }

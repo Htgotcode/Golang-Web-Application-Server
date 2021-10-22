@@ -5,6 +5,8 @@ import (
 )
 
 type Cart struct {
-	ID    primitive.ObjectID `bson:"_id"`
-	Cards []Card             `bson:"cards"`
+	ID     primitive.ObjectID `bson:"_id"`
+	UserID string             `bson:"userid"`
+
+	Cards []Card `bson:"cards"`
 }

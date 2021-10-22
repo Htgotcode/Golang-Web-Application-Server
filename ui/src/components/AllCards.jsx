@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Search, ViewList } from 'react-bootstrap-icons';
 import Card from 'react-bootstrap/Card';
-import ListGroup from 'react-bootstrap/ListGroup';
 import pokemon from 'pokemontcgsdk'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import RenderCardListing from '../components/CardListing';
 import axios from 'axios';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 pokemon.configure({apiKey: '8c44560c-5a0a-4e9e-828a-898992ad6345'})
 
@@ -76,7 +78,7 @@ function CardsBase() {
       return <div className="App">Loading...</div>;
     } else {
       return (
-        <div className="container p-0">
+        <Container className=" p-0">
           <Form onSubmit={handleSearch}>
           <span className="align-middle"><Search size={15}/>  </span>
           <Form.Group className="m-1" controlId="formSearch">
@@ -93,39 +95,28 @@ function CardsBase() {
           </span>
           </Form>
 
-          <div className="container">
-            <div className="row">
-                    {CARDS.map((card) => {
-                    return (
-                    <div className="col-3" key={card._id}>
-                          <Card className="m-1">
-                          <div className="">
-                            <Card.Img variant="top" src={card.images.small} />
-                          </div>
+          <Container className="mt-3">
+            <Row>
+                {CARDS.map((card) => {
+                return (
+                    <Col xs={4} md={4} lg={2} xl={2} xxl={2} sm={4} className="shadow rounded m-3" key={card._id}>
+                      
+                          <Card>
+                          <Card.Header as="h5">{card.name}</Card.Header>
+                          <Card.Link href="#">
                           <Card.Body>
-                            <Card.Title>{card.name}</Card.Title>
-                            <Card.Text>
-                            {card.flavorText}
-                            </Card.Text>
-                              <ListGroup variant="flush">
-                              <ListGroup.Item>Pokémon</ListGroup.Item>
-                              <ListGroup.Item>{card.set.name}</ListGroup.Item>
-                              <ListGroup.Item>{card.rarity}</ListGroup.Item>
-                              <ListGroup.Item>${card.cardmarket.prices.averageSellPrice}</ListGroup.Item>
-                            </ListGroup>
-                            <a href = "/card-listing">
-                            <input type ="Button" value="View Card Listing" onClick={() => createCardListing(card)}/>
-                            </a>
+                          <Card.Img variant="top" src={card.images.small} />
                           </Card.Body>
-                        </Card>  
-                      </div> 
+                          </Card.Link>
+                      </Card>  
+                    </Col> 
                     )
                   }
                 )
               }
-            </div>
-          </div>
-        </div>
+            </Row>
+          </Container>
+        </Container>
       );
     }
 }

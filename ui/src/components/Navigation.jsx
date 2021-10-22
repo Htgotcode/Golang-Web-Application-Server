@@ -18,8 +18,7 @@ class Navigation extends React.Component {
                         <Nav.Link className="h4" href="/all-cards">All Cards</Nav.Link>
                     </Nav>
                     <Nav>
-                        <Nav.Link className="" href="/cart"><Cart2 size={20}/></Nav.Link>
-                        <Nav.Link className="text-white" href="/profile"><Image src="./images/logo255.png" width="30" height="30" alt="Profile Picture"/><br/>NAME GOES HERE</Nav.Link>
+                        <Nav.Link className="text-white" href="/profile"><Image src="./images/logo255.png" width="30" height="30" alt="Profile Picture"/><br/>JohnDoe</Nav.Link>
                     </Nav>
                     </Navbar.Collapse>
                 </Container>

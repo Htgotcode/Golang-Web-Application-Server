@@ -27,6 +27,7 @@ class AddCard extends React.Component {
     this.handleOwnerID = this.handleOwnerID.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
  
   handleName = event => {
     this.setState({ name: event.target.value });
@@ -75,7 +76,10 @@ class AddCard extends React.Component {
         console.log(res);
         console.log(res.data);
       })
+      
   }
+
+
  
   render() {
     return (
@@ -123,7 +127,7 @@ class AddCard extends React.Component {
 
           <Form.Group className="mb-3" controlId="formSellingPrice">
             <Form.Label>Card Selling Price</Form.Label>
-            <Form.Control type="text" value={this.state.sellingprice} name="sellingprice" onChange={this.handleSellingPrice} placeholder="Enter selling price" required/>
+            <Form.Control type="number" value={this.state.sellingprice} name="sellingprice" onChange={this.handleSellingPrice} placeholder="Enter selling price" required/>
             <Form.Text className="text-muted">
               eg. 5.26
             </Form.Text>

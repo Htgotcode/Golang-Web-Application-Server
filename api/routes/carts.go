@@ -21,6 +21,12 @@ func CreateCart(c *gin.Context) {
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 	defer cancel()
 	var cart models.Cart
+	cart.ID = primitive.NewObjectID()
+
+	//should work but doesn't
+	for i := range cart.Cards {
+		cart.Cards[i].ID = primitive.NewObjectID()
+	}
 
 	if err := c.BindJSON(&cart); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -34,7 +40,6 @@ func CreateCart(c *gin.Context) {
 		fmt.Println(validationErr)
 		return
 	}
-	cart.ID = primitive.NewObjectID()
 
 	result, insertErr := cartCollection.InsertOne(ctx, cart)
 	if insertErr != nil {
@@ -66,27 +71,22 @@ func GetCart(c *gin.Context) {
 		return
 	}
 
-	fmt.Println(cart)
-
 	c.IndentedJSON(http.StatusOK, cart)
 }
 
-func GetCartById(c *gin.Context) {
+func GetCartByUserId(c *gin.Context) {
 
-	cartID := c.Params.ByName("_id")
-	docID, _ := primitive.ObjectIDFromHex(cartID)
+	userID := c.Param("userid")
 
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 	defer cancel()
 	var cart bson.M
 
-	if err := cartCollection.FindOne(ctx, bson.M{"_id": docID}).Decode(&cart); err != nil {
+	if err := cartCollection.FindOne(ctx, bson.M{"userid": userID}).Decode(&cart); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		fmt.Println(err)
 		return
 	}
-
-	fmt.Println(cart)
 
 	c.JSON(http.StatusOK, cart)
 }
@@ -159,4 +159,24 @@ func UpdateCart(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, result.ModifiedCount)
+}
+
+func RemoveCart(c *gin.Context) {
+	cartID := c.Param("id")
+	docID, _ := primitive.ObjectIDFromHex(cartID)
+
+	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
+	defer cancel()
+
+	result, err := cartCollection.DeleteOne(ctx, bson.M{"_id": docID})
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		fmt.Println(err)
+		return
+	}
+
+	defer cancel()
+
+	c.IndentedJSON(http.StatusOK, result.DeletedCount)
 }
