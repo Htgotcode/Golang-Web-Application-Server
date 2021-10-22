@@ -16,6 +16,7 @@ pokemon.configure({apiKey: '8c44560c-5a0a-4e9e-828a-898992ad6345'})
 function CardsBase() {
     const [pokemonCards, setPokemonCards] = useState([])
     const [marketCards, setMarketCards] = useState([])
+    const [viewedCard, setViewedCard] = useState([])
     const [amountAvailable, setAmountAvailable] = useState(0)
     const [isLoading, setLoading] = useState(true);
     const [Name, setName] = useState('');
@@ -53,6 +54,14 @@ function CardsBase() {
       axios.get('/card')
         .then((response) => {
           setMarketCards(response.data);
+      });
+    };
+
+    const viewCard = (viewedCard) => {
+      console.log(viewCard)
+      axios.get('/view-card')
+        .then((response) => {
+          setViewedCard(response.data);
       });
     };
   
@@ -94,10 +103,10 @@ function CardsBase() {
                 
                 return (
                     <Col xs={4} md={4} lg={2} xl={2} xxl={2} sm={4} className="shadow rounded m-3" key={card._id}>
-                        <Card>
+                        <Card onClick={() => {viewCard(card)}}>
                           <Card.Header as="h5">{card.name} - {amountAvailable} in Market</Card.Header>
                           <Card.Body>
-                          <Card.Img variant="top" src={card.images.small}  />
+                          <Card.Img variant="top" src={card.images.small}/>
                           </Card.Body>
                       </Card>  
                     </Col> 

@@ -54,6 +54,7 @@ func main() {
 	r.GET("/cart", Handler)
 	r.GET("/cart-response", routes.GetCart)
 	r.GET("/market", Handler)
+	r.GET("/view-card", routes.GetCardListingsByName)
 
 	//POSTS
 	r.POST("/card-add", routes.AddNewcard)

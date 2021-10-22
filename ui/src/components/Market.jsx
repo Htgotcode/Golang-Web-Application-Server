@@ -103,7 +103,7 @@ function Market() {
                         return (
 
                           <Col xs={4} md={4} lg={2} xl={2} xxl={2} sm={4} className="shadow rounded m-3" key={card._id}>
-                              <Card>
+                              <Card onClick={() => {viewCard(card)}}>
                                 <Card.Header as="h5">{card.name} - {card.brand}</Card.Header>
                                 <Card.Body>
                                 <Card.Img variant="top" src={card.imageurl} />
