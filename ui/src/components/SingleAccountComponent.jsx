@@ -17,25 +17,6 @@ const Account = ({accountData}) => {
             </Row>
         </Card>
     )
-
-    // function changeWaiter(){
-    //     setChangeWaiter(
-    //         {
-    //             "change": true,
-    //             "id": orderData._id
-    //         }
-    //     )
-    // }
-
-    // function changeOrder(){
-    //     setChangeOrder(
-    //         {
-    //             "change": true,
-    //             "id": orderData._id
-    //         }
-    //     )
-    // }
-
 }
 
 export default RenderAccount

@@ -9,13 +9,10 @@ import (
 	"github.com/Htgotcode/Golang-Web-Application-Server/api/models"
 	"github.com/Htgotcode/Golang-Web-Application-Server/database"
 	"github.com/gin-gonic/gin"
-	"github.com/go-playground/validator/v10"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
-
-var validateCart = validator.New()
 
 var cartCollection *mongo.Collection = database.OpenCollection(database.Client, "cart_db", "cart_connection")
 

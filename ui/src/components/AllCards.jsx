@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Search } from 'react-bootstrap-icons';
+import { Search, ViewList } from 'react-bootstrap-icons';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import pokemon from 'pokemontcgsdk'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import RenderCardListing from '../components/CardListing';
+import axios from 'axios';
 
 pokemon.configure({apiKey: '8c44560c-5a0a-4e9e-828a-898992ad6345'})
 
 function CardsBase() {
     const [CARDS, setCARDS] = useState([])
+    const [CardList, setCardList] = useState([])
     const [isLoading, setLoading] = useState(true);
     const [Name, setName] = useState('');
     
@@ -37,7 +40,38 @@ function CardsBase() {
             setLoading(false);
       })
     }
-  
+    
+    const createCardListing = () => {
+      if(cardListingCount > 0){
+        axios.post(`/card-listing-add`, {cards: CardList }, {headers: {'Content-Type': 'application/json'}})
+          .then(res => {
+            console.log(res);
+            console.log(res.data);
+      })
+      }
+      
+    }
+
+    const addToCardListings = (card) => {
+      setCart((CardList) => [...CardList, card]);
+      setCartCount(cardListingCount + 1);
+    };
+
+    const clearCardListings = () => {
+      setCart([]);
+      setCardListCount(0);
+      alert("Card Listing cleared.");
+    };
+
+    // const addCardListing = (card) => {
+      
+    //   axios.post(`/card-listing-add`, card._id, {headers: {'Content-Type': 'application/json'}})
+    //   .then(res => {
+    //     console.log(res);
+    //     console.log(res.data);
+    //   })
+    // }
+
     if (isLoading){
       return <div className="App">Loading...</div>;
     } else {
@@ -52,20 +86,12 @@ function CardsBase() {
               eg. Pikachu
             </Form.Text>
           </Form.Group>
-          {/* <input
-            type="search"
-            value={Name}
-            className="input"
-            placeholder="Search name..."
-            size="80"
-          /> */}
            <span className="align-middle">
            <Button variant="primary" type="submit">
             Search
           </Button>
           </span>
           </Form>
-          
 
           <div className="container">
             <div className="row">
@@ -87,6 +113,9 @@ function CardsBase() {
                               <ListGroup.Item>{card.rarity}</ListGroup.Item>
                               <ListGroup.Item>${card.cardmarket.prices.averageSellPrice}</ListGroup.Item>
                             </ListGroup>
+                            <a href = "/card-listing">
+                            <input type ="Button" value="View Card Listing" onClick={() => createCardListing(card)}/>
+                            </a>
                           </Card.Body>
                         </Card>  
                       </div> 
@@ -102,16 +131,12 @@ function CardsBase() {
 }
   
   class AllCards extends React.Component {
-      render() {
-            return (
-              <div>
-              <CardsBase />
-              </div>
-          );
-      }
-  }
-    
-  
-  
-  
-  export default AllCards
+        render() {
+              return (
+                <div>
+                  <CardsBase />
+                </div>
+            );
+        }
+  } 
+export default AllCards

@@ -6,8 +6,6 @@ import (
 	"net/http"
 	"time"
 
-	//"api/models"
-
 	"github.com/Htgotcode/Golang-Web-Application-Server/api/models"
 	"github.com/Htgotcode/Golang-Web-Application-Server/database"
 	"github.com/gin-gonic/gin"
@@ -150,6 +148,28 @@ func GetCardById(c *gin.Context) {
 	var card bson.M
 
 	if err := cardCollection.FindOne(ctx, bson.M{"_id": docID}).Decode(&card); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		fmt.Println(err)
+		return
+	}
+
+	defer cancel()
+
+	fmt.Println(card)
+
+	c.JSON(http.StatusOK, card)
+}
+
+func GetCardByName(c *gin.Context) {
+
+	name := c.Params.ByName("name")
+
+	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
+	defer cancel()
+
+	var card bson.M
+
+	if err := cardCollection.FindOne(ctx, bson.M{"name": name}).Decode(&card); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		fmt.Println(err)
 		return

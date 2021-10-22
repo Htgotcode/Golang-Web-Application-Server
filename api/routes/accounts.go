@@ -100,7 +100,7 @@ func GetAccountByUsername(c *gin.Context) {
 func GetAccountById(c *gin.Context) {
 
 	//accountID := c.Params.ByName("_id")
-	//fmt.Println(accountID)
+
 	docID, _ := primitive.ObjectIDFromHex("616d8131ea99fc4e8f9806e1")
 	fmt.Println(docID)
 
@@ -128,10 +128,6 @@ func UpdateAccount(c *gin.Context) {
 
 	defer cancel()
 
-	// type Waiter struct {
-	// 	Server *string `json:"server"`
-	// }
-
 	var account models.Account
 
 	if err := c.BindJSON(&account); err != nil {
@@ -155,48 +151,3 @@ func UpdateAccount(c *gin.Context) {
 	c.JSON(http.StatusOK, result.ModifiedCount)
 
 }
-
-//update the order
-// func UpdateOrder(c *gin.Context) {
-
-// 	orderID := c.Params.ByName("id")
-// 	docID, _ := primitive.ObjectIDFromHex(orderID)
-
-// 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
-
-// 	var order models.Order
-
-// 	if err := c.BindJSON(&order); err != nil {
-// 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-// 		fmt.Println(err)
-// 		return
-// 	}
-
-// 	validationErr := validate.Struct(order)
-// 	if validationErr != nil {
-// 		c.JSON(http.StatusBadRequest, gin.H{"error": validationErr.Error()})
-// 		fmt.Println(validationErr)
-// 		return
-// 	}
-
-// 	result, err := orderCollection.ReplaceOne(
-// 		ctx,
-// 		bson.M{"_id": docID},
-// 		bson.M{
-// 			"dish":   order.Dish,
-// 			"price":  order.Price,
-// 			"server": order.Server,
-// 			"table":  order.Table,
-// 		},
-// 	)
-
-// 	if err != nil {
-// 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-// 		fmt.Println(err)
-// 		return
-// 	}
-
-// 	defer cancel()
-
-// 	c.JSON(http.StatusOK, result.ModifiedCount)
-// }
