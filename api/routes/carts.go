@@ -15,10 +15,13 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
+// Validation variable for error handling
 var validateCart = validator.New()
 
+// Initialise Cart database collection
 var cartCollection *mongo.Collection = database.OpenCollection(database.Client, "cart_db", "cart_connection")
 
+// Function to create a single cart item
 func CreateCart(c *gin.Context) {
 
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
@@ -49,6 +52,7 @@ func CreateCart(c *gin.Context) {
 	c.JSON(http.StatusOK, result)
 }
 
+// Function to retrieve all cart items
 func GetCart(c *gin.Context) {
 
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
@@ -74,6 +78,7 @@ func GetCart(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, cart)
 }
 
+// Function to retrieve a specific cart item by ID
 func GetCartById(c *gin.Context) {
 
 	cartID := c.Params.ByName("_id")
@@ -94,6 +99,7 @@ func GetCartById(c *gin.Context) {
 	c.JSON(http.StatusOK, cart)
 }
 
+// Function to update a single cart item
 func UpdateCartOneItem(c *gin.Context) {
 
 	cartID := c.Params.ByName("id")
@@ -125,6 +131,7 @@ func UpdateCartOneItem(c *gin.Context) {
 
 }
 
+// Function to update cart collection
 func UpdateCart(c *gin.Context) {
 
 	orderID := c.Params.ByName("id")

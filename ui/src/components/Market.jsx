@@ -4,6 +4,7 @@ import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import axios from "axios";
 
+// Function to retrieve card data and render it
 function Market() {
   const [CARDS, setCARDS] = useState([])
   const [isLoading, setLoading] = useState(true);
@@ -44,7 +45,6 @@ function Market() {
       setFoundCard(RESULTS);
     } else {
       setFoundCard(CARDS);
-      // If the text field is empty, show all cards
     }
 
     setName(keyword);
@@ -105,7 +105,7 @@ function Market() {
   }
   
 }
-
+// Component calls the market function
 class GetCards extends React.Component {
     render() {
           return (

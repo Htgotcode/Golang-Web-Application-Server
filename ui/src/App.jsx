@@ -1,3 +1,8 @@
+// Google Analytics import, intialisation and setup of page view tracking
+import ReactGA from 'react-ga';
+ReactGA.initialize('UA-210763128-1');
+ReactGA.pageview(window.location.pathname + window.location.search);
+
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -10,6 +15,7 @@ import CartPage from './views/CartPage';
 import ProfilePage from './views/ProfilePage';
 import AllCardsPage from './views/AllCardsPage';
 
+// Component renders application
 class App extends Component {
     render() {
       return(

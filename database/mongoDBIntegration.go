@@ -17,26 +17,21 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
-const connectionString = "Connection String"
-
-// Database Name
-const accountDBName = "accountDB"
-
-// Collection name
-const accountCollectionName = "accounts"
-
-// collection object/instance
+// Database collection variable instance
 var collection *mongo.Collection
 
+// Function for creating a MongoDB database instance
 func DBinstance() *mongo.Client {
+	// Load .env file
 	err := godotenv.Load(".env")
 
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
-
+	// Store connection string in variable
 	MongoDb := os.Getenv("MongoURL")
 
+	// Create MongoDB database client
 	client, err := mongo.NewClient(options.Client().ApplyURI(MongoDb))
 	if err != nil {
 		log.Fatal(err)
@@ -54,9 +49,10 @@ func DBinstance() *mongo.Client {
 	return client
 }
 
-//Client Database instance
+//Global Client Database instance
 var Client *mongo.Client = DBinstance()
 
+// Fucntion to connect to and return database collections
 func OpenCollection(client *mongo.Client, databaseName string, collectionName string) *mongo.Collection {
 
 	var collection *mongo.Collection = client.Database(databaseName).Collection(collectionName)
@@ -64,16 +60,7 @@ func OpenCollection(client *mongo.Client, databaseName string, collectionName st
 	return collection
 }
 
-func ConnectDB(uri string) (*mongo.Client, context.Context,
-	context.CancelFunc, error) {
-
-	ctx, cancel := context.WithTimeout(context.Background(),
-		30*time.Second)
-
-	client, err := mongo.Connect(ctx, options.Client().ApplyURI(uri))
-	return client, ctx, cancel, err
-}
-
+// Function to check to see if MongoDB is connected
 func CheckConnection(client *mongo.Client, ctx context.Context) error {
 	if err := client.Ping(ctx, readpref.Primary()); err != nil {
 		return err
@@ -82,6 +69,7 @@ func CheckConnection(client *mongo.Client, ctx context.Context) error {
 	return nil
 }
 
+// Function to close MongoDB connection
 func CloseConnection(client *mongo.Client, ctx context.Context,
 	cancel context.CancelFunc) {
 
@@ -94,6 +82,7 @@ func CloseConnection(client *mongo.Client, ctx context.Context,
 	}()
 }
 
+// Function to retrieve all accounts in the account collection as JSON
 func GetAllAccountsRoute(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Context-Type", "application/x-www-form-urlencoded")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -101,8 +90,8 @@ func GetAllAccountsRoute(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(payload)
 }
 
+// Function to retrieve all accounts in the account collection
 func GetAllAccounts() []primitive.M {
-	//accountsCollection := client.Database("account_db").Collection("accounts")
 
 	cur, err := collection.Find(context.Background(), bson.D{{}})
 	if err != nil {
@@ -127,27 +116,3 @@ func GetAllAccounts() []primitive.M {
 	cur.Close(context.Background())
 	return results
 }
-
-// func registerAccount(account models.Account) {
-// 	//accountsCollection := client.Database("account_db").Collection("accounts")
-// 	insertResult, err := collection.InsertOne(context.Background(), account)
-
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-
-// 	fmt.Println("Inserted a Single Record ", insertResult.InsertedID)
-// }
-
-// func deleteOneAccount(account string) {
-// 	//accountsCollection := client.Database("account_db").Collection("accounts")
-// 	fmt.Println(account)
-// 	id, _ := primitive.ObjectIDFromHex(account)
-// 	filter := bson.M{"_id": id}
-// 	d, err := collection.DeleteOne(context.Background(), filter)
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-
-// 	fmt.Println("Deleted Document", d.DeletedCount)
-// }

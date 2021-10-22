@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
- 
+// Component used to add card to the marketplace 
 class AddCard extends React.Component {
   constructor(props) {
     super(props);

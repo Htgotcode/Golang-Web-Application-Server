@@ -6,6 +6,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+//Card database model
 type Card struct {
 	ID           primitive.ObjectID `bson:"_id"`
 	Name         string             `bson:"name"`

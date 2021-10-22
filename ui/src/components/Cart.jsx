@@ -3,6 +3,7 @@ import axios from 'axios';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 
+// Function to retrieve cart data and render it
 function Cart() {
     const [isLoading, setLoading] = useState(true);
     const [Cart, setCart] = useState([]);
@@ -66,7 +67,7 @@ function Cart() {
     }
     
   }
-  
+  // Component calls the Market function
   class RenderCart extends React.Component {
       render() {
             return (

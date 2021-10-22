@@ -4,7 +4,7 @@ import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image'
 import { Cart2 } from 'react-bootstrap-icons';
-
+// Component allows for navigating between pages via the navigation bar
 class Navigation extends React.Component {
     render(){
         return(

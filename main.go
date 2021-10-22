@@ -11,8 +11,10 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
+// Initialise MongoDB database instance
 var DB *mongo.Client = database.DBinstance()
 
+// Function to handle parsing files from index.html
 func Handler(c *gin.Context) {
 	tmpl, err := template.ParseFiles("./ui/build/index.html")
 	if err != nil {
@@ -23,16 +25,18 @@ func Handler(c *gin.Context) {
 }
 
 func main() {
+	// Retrieves the port value stored in the .env file
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
 	}
-
+	// Initialise Gin-gonic middleware instance
 	r := gin.New()
+	// Gin logger middleware to write logs
 	r.Use(gin.Logger())
-
+	// Attaches middleware to the router and returns middleware handler that serves statics files in given directory
 	r.Use(static.Serve("/", static.LocalFile("./ui/build", true)))
-
+	// Creates router group API
 	r.Group("/api")
 
 	//GETS

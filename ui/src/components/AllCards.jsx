@@ -6,8 +6,10 @@ import pokemon from 'pokemontcgsdk'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
+// Pokemon API configuration key
 pokemon.configure({apiKey: '8c44560c-5a0a-4e9e-828a-898992ad6345'})
 
+// Function to get all pokemon cards
 function CardsBase() {
     const [CARDS, setCARDS] = useState([])
     const [isLoading, setLoading] = useState(true);
@@ -52,13 +54,7 @@ function CardsBase() {
               eg. Pikachu
             </Form.Text>
           </Form.Group>
-          {/* <input
-            type="search"
-            value={Name}
-            className="input"
-            placeholder="Search name..."
-            size="80"
-          /> */}
+          
            <span className="align-middle">
            <Button variant="primary" type="submit">
             Search
@@ -100,7 +96,7 @@ function CardsBase() {
       );
     }
 }
-  
+  // Component that calls the CardsBase function
   class AllCards extends React.Component {
       render() {
             return (

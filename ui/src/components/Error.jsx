@@ -1,5 +1,5 @@
 import React from 'react';
-
+// Constant created for error handling
 const Error = () => {
    return (
       <div>

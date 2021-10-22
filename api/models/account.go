@@ -6,13 +6,14 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+//Account database model
 type Account struct {
 	ID        primitive.ObjectID `bson:"_id"`
 	Username  string             `bson:"username"`
 	Password  string             `bson:"password"`
 	Email     string             `bson:"email"`
 	CreatedAt time.Time          `bson:"createdAt"`
-
+	// Nested object array of purchase history
 	PurchaseHistory []struct {
 		Name         string    `bson:"name"`
 		Description  string    `bson:"description"`
@@ -23,7 +24,7 @@ type Account struct {
 		UploadedAt   time.Time `bson:"uploaded_at"`
 		CardID       string    `bson:"card_id"`
 	} `json:"purchaseHistory"`
-
+	// Nested object array of sale history
 	SaleHistory []struct {
 		Name         string    `bson:"name"`
 		Description  string    `bson:"description"`
