@@ -59,13 +59,13 @@ func main() {
 			aud := os.Getenv("AUTH0_API_AUDIENCE")
 			checkAudience := token.Claims.(jwt.MapClaims).VerifyAudience(aud, false)
 			if !checkAudience {
-				return token, errors.New("Invalid audience.")
+				return token, errors.New("invalid audience")
 			}
 			// verify iss claim
 			iss := os.Getenv("AUTH0_DOMAIN")
 			checkIss := token.Claims.(jwt.MapClaims).VerifyIssuer(iss, false)
 			if !checkIss {
-				return token, errors.New("Invalid issuer.")
+				return token, errors.New("invalid issuer")
 			}
 
 			cert, err := getPemCert(token)
@@ -106,6 +106,7 @@ func main() {
 	r.GET("/card-listing", Handler)
 	r.GET("/cart", Handler)
 	r.GET("/cart-response", routes.GetCart)
+	r.GET("/market", Handler)
 
 	//POSTS
 	r.POST("/card-add", routes.AddNewcard)
@@ -158,7 +159,7 @@ func getPemCert(token *jwt.Token) (string, error) {
 	}
 
 	if cert == "" {
-		return cert, errors.New("unable to find appropriate key.")
+		return cert, errors.New("unable to find appropriate key")
 	}
 
 	return cert, nil

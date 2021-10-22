@@ -3,19 +3,15 @@ ReactGA.initialize('UA-210763128-1');
 ReactGA.pageview(window.location.pathname + window.location.search);
 
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
+import { BrowserRouter , Route, Switch } from "react-router-dom";
 
 import HomePage from './views/HomePage';
-import Error from './components/Error';
 import Navigation from './components/Navigation';
 import CardPage from './views/CardPage';
 import CartPage from './views/CartPage';
-import ProfilePage from './views/ProfilePage';
 import AllCardsPage from './views/AllCardsPage';
-import LoggedInPage from './views/LoggedInPage';
-import { Container } from 'react-bootstrap';
-import GetCards from './components/Market';
+import MarketPage from './views/MarketPage';
 const AUTH0_CLIENT_ID="xJpx6qZVNhbzuwsNse6gpcXt1oOjF1m6"
 const AUTH0_DOMAIN="dev-oapcbgti.us.auth0.com"
 const AUTH0_CALLBACK_URL=location.href
@@ -81,11 +77,18 @@ class App extends React.Component {
   render() {
     if (this.loggedIn) {
       return (
-      <Container>
-        <Navigation />
-        <LoggedInPage />
-        <GetCards />
-      </Container>
+      <BrowserRouter>
+         <Navigation/>
+          <Switch>
+            <Route exact path="/" component={HomePage}/>
+            <Route exact path="/market" component={MarketPage}/>
+            <Route path="/card-add" component={CardPage}/>
+            <Route path="/cart" component={CartPage}/>
+            <Route path="/card" component={CardPage}/>
+            <Route path="/all-cards" component={AllCardsPage}/>
+            <Route component={Error}/>
+          </Switch>
+      </BrowserRouter>
       )
     }
     return <HomePage />;
