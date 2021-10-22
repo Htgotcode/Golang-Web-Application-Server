@@ -12,7 +12,7 @@ Additionally as the application development progressed, there were additional re
 * ReactJS - UI 
 * MongoDB - database
 * Gin - Server
-* Gin - Authentication 
+* Auth0 - Authentication 
 
 ### Detailed Stack Levels:
 #### Front-end
@@ -24,6 +24,7 @@ Additionally as the application development progressed, there were additional re
 * React-GA
 * Google Analytics
 * PokemonAPI
+* Auth0
 #### Back-end
 * Golang
 * MongoDB
