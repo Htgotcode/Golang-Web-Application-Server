@@ -17,14 +17,6 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
-const connectionString = "Connection String"
-
-// Database Name
-const accountDBName = "accountDB"
-
-// Collection name
-const accountCollectionName = "accounts"
-
 // collection object/instance
 var collection *mongo.Collection
 
@@ -78,7 +70,7 @@ func CheckConnection(client *mongo.Client, ctx context.Context) error {
 	if err := client.Ping(ctx, readpref.Primary()); err != nil {
 		return err
 	}
-	fmt.Println("MongoDB Connected.")
+
 	return nil
 }
 

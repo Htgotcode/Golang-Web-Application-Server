@@ -5,6 +5,7 @@ import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image'
 
+
 // Component allows for navigating between pages via the navigation bar
 class Navigation extends React.Component {
     constructor(props) {
@@ -17,18 +18,6 @@ class Navigation extends React.Component {
     localStorage.removeItem("access_token");
     localStorage.removeItem("profile");
     location.reload();
-    }
-
-    authenticate() {
-    this.WebAuth = new auth0.WebAuth({
-        domain: AUTH0_DOMAIN,
-        clientID: AUTH0_CLIENT_ID,
-        scope: "openid profile",
-        audience: AUTH0_API_AUDIENCE,
-        responseType: "token id_token",
-        redirectUri: AUTH0_CALLBACK_URL
-    });
-    this.WebAuth.authorize();
     }
 
     render(){

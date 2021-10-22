@@ -27,9 +27,8 @@ class AddCard extends React.Component {
     this.handleImageURL = this.handleImageURL.bind(this);
     this.handleEmail = this.handleEmail.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.alert = this.alert.bind(this);
+    this.sendAlert = this.sendAlert.bind(this);
   }
-
  
   handleName = event => {
     this.setState({ name: event.target.value });
@@ -76,7 +75,7 @@ class AddCard extends React.Component {
       })
   }
 
-  alert = () => {
+  sendAlert = () => {
     alert("Card uploaded");
   }
 
@@ -150,7 +149,7 @@ class AddCard extends React.Component {
             </Form.Text>
           </Form.Group>
 
-          <Button variant="primary" type="submit" onClick={() => alert()}>
+          <Button variant="primary" type="submit" onClick={() => sendAlert()}>
             Add
           </Button>
         </Form>
