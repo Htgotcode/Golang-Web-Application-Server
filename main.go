@@ -14,6 +14,7 @@ import (
 var DB *mongo.Client = database.DBinstance()
 
 func Handler(c *gin.Context) {
+
 	tmpl, err := template.ParseFiles("./ui/build/index.html")
 	if err != nil {
 		panic(err)
@@ -23,6 +24,7 @@ func Handler(c *gin.Context) {
 }
 
 func main() {
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
@@ -32,8 +34,6 @@ func main() {
 	r.Use(gin.Logger())
 
 	r.Use(static.Serve("/", static.LocalFile("./ui/build", true)))
-
-	r.Group("/api")
 
 	//GETS
 	r.GET("/", Handler)

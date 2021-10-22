@@ -54,13 +54,6 @@ function CardsBase() {
               eg. Pikachu
             </Form.Text>
           </Form.Group>
-          {/* <input
-            type="search"
-            value={Name}
-            className="input"
-            placeholder="Search name..."
-            size="80"
-          /> */}
            <span className="align-middle">
            <Button variant="primary" type="submit">
             Search
@@ -80,12 +73,6 @@ function CardsBase() {
                           <Card.Body>
                           <Card.Img variant="top" src={card.images.small} />
                           </Card.Body>
-                          {/* <Card.Title className="h1">{card.name}</Card.Title>
-                          <Card.Text>{card.flavorText}</Card.Text>
-                          <Card.Subtitle>Pokémon</Card.Subtitle>
-                          <Card.Text>{card.setname}</Card.Text>
-                          <Card.Text>{card.rarity}</Card.Text>
-                          <Card.Text>Average Price ${card.cardmarket.prices.averageSellPrice}</Card.Text> */}
                           </Card.Link>
                       </Card>  
                     </Col> 

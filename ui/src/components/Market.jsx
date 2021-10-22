@@ -15,7 +15,7 @@ function Market() {
   const [Name, setName] = useState('');
   const [foundCard, setFoundCard] = useState(CARDS);
   var [cartCount, setCartCount] = useState(0);
-
+  
   useEffect(() => {
     getCards();
   }, []);

@@ -34,7 +34,7 @@ function Cart() {
     if (isLoading){
       return <div className="App">Loading...</div>;
     } else {
-      
+      if(Cart != null){
         return (
           <div className="container">
             <div className="row">
@@ -63,13 +63,13 @@ function Cart() {
                             )
                           })
                         } 
-                        <Button type ="submit" value="Buy" onClick={() => buyCart(cartItem)}>Buy Cart</Button>
+                        <a href="/cart"><Button type ="submit" value="Buy" onClick={() => buyCart(cartItem)}>Buy Cart</Button></a>
                       </div>
                     </div>
                     )
                   } else {
                     return(
-                      <div>
+                      <div className="App">
                         User not Found.
                       </div>
                     )
@@ -82,8 +82,14 @@ function Cart() {
       );
       
      
-    }
-    
+    }else {
+      return(
+        <div className="App">
+          Cart is empty.
+        </div>
+      )
+  } 
+  }
   }
   
   class RenderCart extends React.Component {

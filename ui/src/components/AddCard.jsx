@@ -27,6 +27,7 @@ class AddCard extends React.Component {
     this.handleOwnerID = this.handleOwnerID.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
  
   handleName = event => {
     this.setState({ name: event.target.value });
@@ -75,7 +76,10 @@ class AddCard extends React.Component {
         console.log(res);
         console.log(res.data);
       })
+      
   }
+
+
  
   render() {
     return (
