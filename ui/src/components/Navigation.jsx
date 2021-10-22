@@ -4,6 +4,7 @@ import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image'
 
+// Component allows for navigating between pages via the navigation bar
 class Navigation extends React.Component {
     render(){
         return(
@@ -16,6 +17,7 @@ class Navigation extends React.Component {
                         <Nav.Link className="h4" href="/">Market</Nav.Link>
                         <Nav.Link className="h4" href="/card-add">Upload Card</Nav.Link>
                         <Nav.Link className="h4" href="/all-cards">All Cards</Nav.Link>
+                        <Nav.Link className="h4" href="/cart">Cart</Nav.Link>
                     </Nav>
                     <Nav>
                         <Nav.Link className="text-white" href="/profile"><Image src="./images/logo255.png" width="30" height="30" alt="Profile Picture"/><br/>JohnDoe</Nav.Link>

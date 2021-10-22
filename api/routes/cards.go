@@ -15,11 +15,16 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
+// Initialise Card database collection
 var cardCollection *mongo.Collection = database.OpenCollection(database.Client, "cards_db", "card_collection")
+
+// Initialise Marketplace database collection
 var marketCollection *mongo.Collection = database.OpenCollection(database.Client, "marketplace_db", "marketplace_collection")
+
+// Validation variable initialised
 var validate = validator.New()
 
-//Card functions
+//Function to add a single new card to the marketplace collection
 func AddNewcard(c *gin.Context) {
 
 	var marketplaceCollection *mongo.Collection = database.OpenCollection(database.Client, "marketplace_db", "marketplace_collection")
@@ -56,6 +61,7 @@ func AddNewcard(c *gin.Context) {
 	c.JSON(http.StatusOK, result)
 }
 
+// Function to retrieve marketplace collection cards
 func GetMarket(c *gin.Context) {
 
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
@@ -82,6 +88,7 @@ func GetMarket(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, cards)
 }
 
+// Function to retrieve cards from card collection
 func GetCards(c *gin.Context) {
 
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
@@ -108,6 +115,7 @@ func GetCards(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, cards)
 }
 
+// Function to retirve cards filtered by brand
 func GetCardsByBrand(c *gin.Context) {
 
 	brand := c.Params.ByName("brand")
@@ -137,6 +145,29 @@ func GetCardsByBrand(c *gin.Context) {
 	c.JSON(http.StatusOK, cards)
 }
 
+// Function to retrieve a specific card by ID
+func GetCardByName(c *gin.Context) {
+
+	name := c.Params.ByName("name")
+
+	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
+	defer cancel()
+
+	var card bson.M
+
+	if err := cardCollection.FindOne(ctx, bson.M{"name": name}).Decode(&card); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		fmt.Println(err)
+		return
+	}
+
+	defer cancel()
+
+	fmt.Println(card)
+
+	c.JSON(http.StatusOK, card)
+}
+
 func GetCardById(c *gin.Context) {
 
 	cardID := c.Params.ByName("_id")
@@ -160,28 +191,7 @@ func GetCardById(c *gin.Context) {
 	c.JSON(http.StatusOK, card)
 }
 
-func GetCardByName(c *gin.Context) {
-
-	name := c.Params.ByName("name")
-
-	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
-	defer cancel()
-
-	var card bson.M
-
-	if err := cardCollection.FindOne(ctx, bson.M{"name": name}).Decode(&card); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		fmt.Println(err)
-		return
-	}
-
-	defer cancel()
-
-	fmt.Println(card)
-
-	c.JSON(http.StatusOK, card)
-}
-
+// Function to retrive a single Pokemon card
 func GetPokemonCards(c *gin.Context) {
 
 	cardID := c.Params.ByName("_id")
@@ -205,6 +215,7 @@ func GetPokemonCards(c *gin.Context) {
 	c.JSON(http.StatusOK, card)
 }
 
+// Function to remove a card from the marketplace
 func RemoveCard(c *gin.Context) {
 	cardID := c.Param("id")
 	docID, _ := primitive.ObjectIDFromHex(cardID)

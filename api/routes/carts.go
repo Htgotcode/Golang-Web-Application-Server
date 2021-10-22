@@ -9,13 +9,19 @@ import (
 	"github.com/Htgotcode/Golang-Web-Application-Server/api/models"
 	"github.com/Htgotcode/Golang-Web-Application-Server/database"
 	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
+// Validation variable for error handling
+var validateCart = validator.New()
+
+// Initialise Cart database collection
 var cartCollection *mongo.Collection = database.OpenCollection(database.Client, "cart_db", "cart_connection")
 
+// Function to create a single cart item
 func CreateCart(c *gin.Context) {
 
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
@@ -27,7 +33,6 @@ func CreateCart(c *gin.Context) {
 	for i := range cart.Cards {
 		cart.Cards[i].ID = primitive.NewObjectID()
 	}
-
 	if err := c.BindJSON(&cart); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		fmt.Println(err)
@@ -40,6 +45,7 @@ func CreateCart(c *gin.Context) {
 		fmt.Println(validationErr)
 		return
 	}
+	cart.ID = primitive.NewObjectID()
 
 	result, insertErr := cartCollection.InsertOne(ctx, cart)
 	if insertErr != nil {
@@ -51,6 +57,7 @@ func CreateCart(c *gin.Context) {
 	c.JSON(http.StatusOK, result)
 }
 
+// Function to retrieve all cart items
 func GetCart(c *gin.Context) {
 
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
@@ -74,6 +81,7 @@ func GetCart(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, cart)
 }
 
+// Function to retrieve a specific user cart by ID
 func GetCartByUserId(c *gin.Context) {
 
 	userID := c.Param("userid")
@@ -91,6 +99,7 @@ func GetCartByUserId(c *gin.Context) {
 	c.JSON(http.StatusOK, cart)
 }
 
+// Function to update a single cart item
 func UpdateCartOneItem(c *gin.Context) {
 
 	cartID := c.Params.ByName("id")
@@ -122,6 +131,7 @@ func UpdateCartOneItem(c *gin.Context) {
 
 }
 
+// Function to update cart collection
 func UpdateCart(c *gin.Context) {
 
 	orderID := c.Params.ByName("id")

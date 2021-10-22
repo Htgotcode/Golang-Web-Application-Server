@@ -9,9 +9,10 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import axios from 'axios';
 
-
+// Pokemon API configuration key
 pokemon.configure({apiKey: '8c44560c-5a0a-4e9e-828a-898992ad6345'})
 
+// Function to get all pokemon cards
 function CardsBase() {
     const [pokemonCards, setPokemonCards] = useState([])
     const [marketCards, setMarketCards] = useState([])
@@ -110,14 +111,14 @@ function CardsBase() {
       );
     }
 }
-  
-  class AllCards extends React.Component {
-        render() {
-              return (
-                <div>
-                  <CardsBase />
-                </div>
-            );
-        }
-  } 
+  // Component that calls the CardsBase function
+class AllCards extends React.Component {
+      render() {
+            return (
+              <div>
+                <CardsBase />
+              </div>
+          );
+      }
+} 
 export default AllCards

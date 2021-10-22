@@ -14,8 +14,10 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
+// Initialise account database collection
 var accountCollection *mongo.Collection = database.OpenCollection(database.Client, "account_db", "accounts")
 
+// Function to insert a single new account data item into account collection
 func AddAccount(c *gin.Context) {
 
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
@@ -46,6 +48,7 @@ func AddAccount(c *gin.Context) {
 	c.JSON(http.StatusOK, result)
 }
 
+// Function to retrieve all account objects in the account collection
 func GetAccount(c *gin.Context) {
 
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
@@ -71,6 +74,7 @@ func GetAccount(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, account)
 }
 
+// Function to retrieve accounts according to username parameters
 func GetAccountByUsername(c *gin.Context) {
 
 	username := c.Params.ByName("username")
@@ -97,11 +101,12 @@ func GetAccountByUsername(c *gin.Context) {
 	c.JSON(http.StatusOK, accounts)
 }
 
+// Function to retrieve specific account by id
 func GetAccountById(c *gin.Context) {
 
 	//accountID := c.Params.ByName("_id")
 
-	docID, _ := primitive.ObjectIDFromHex("616d8131ea99fc4e8f9806e1")
+	docID, _ := primitive.ObjectIDFromHex("616d8131ea99fc4e8f9806e1") //For testing without authentication enabled
 	fmt.Println(docID)
 
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
@@ -119,6 +124,7 @@ func GetAccountById(c *gin.Context) {
 	c.JSON(http.StatusOK, account)
 }
 
+// Function to update a single account
 func UpdateAccount(c *gin.Context) {
 
 	accountID := c.Params.ByName("id")
