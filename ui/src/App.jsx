@@ -13,12 +13,10 @@ import CardPage from './views/CardPage';
 import CartPage from './views/CartPage';
 import ProfilePage from './views/ProfilePage';
 import AllCardsPage from './views/AllCardsPage';
-import useGaTracker from './components/useGaTracker'
-
+import CardListingPage from './views/CardListingPage';
 
 class App extends Component {
     render() {
-      //useGaTracker();
       return(
         <BrowserRouter>
          <Navigation />
@@ -29,6 +27,7 @@ class App extends Component {
           <Route path="/card" component={CardPage}/>
           <Route path="/all-cards" component={AllCardsPage}/>
           <Route path="/profile" component={ProfilePage}/>
+          <Route path="/card-listing" component={CardListingPage}/>
           <Route path="/cart-create" component={CartPage}/>
           <Route path="/cart-response" component={CartPage}/>
           <Route component={Error}/>
@@ -38,18 +37,3 @@ class App extends Component {
     }
   }
   export default App;
-
-  
-
-
-// const pageViewsTracking = (props) => {
-//   const pathname = props.match.path;
-
-//   let pageView;
-//   if(pathname === '*') pageView = '/not-found';
-//   else pageView = pathname;
-
-//   ReactGA.pageview(pageView);
-// }
-
-

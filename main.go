@@ -43,10 +43,16 @@ func main() {
 	r.GET("/profile", Handler)
 	r.GET("/card", routes.GetMarket)
 	r.GET("/account", routes.GetAccount)
-	r.GET("/cart-add", Handler)
+	//r.GET("/card-listing-name", routes.GetCardListingsByName)
+	r.GET("/card-listing", Handler)
+  r.GET("/cart-add", Handler)
 	r.GET("/cart", Handler)
 	r.GET("/cart-response", routes.GetCart)
 
+	//POSTS
+	r.POST("/card-add", routes.AddNewcard)
+	r.POST("/card-listing-add", routes.CreateCardList)
+  
 	//POSTS
 	r.POST("/card-add", routes.AddNewcard)
 	r.POST("/cart-create", routes.CreateCart)
