@@ -13,10 +13,8 @@ import CartPage from './views/CartPage';
 import AllCardsPage from './views/AllCardsPage';
 import MarketPage from './views/MarketPage';
 import ProfilePage from './views/ProfilePage';
-<<<<<<< Updated upstream
-=======
 import ViewCard from './views/ViewCard';
->>>>>>> Stashed changes
+
 const AUTH0_CLIENT_ID="xJpx6qZVNhbzuwsNse6gpcXt1oOjF1m6"
 const AUTH0_DOMAIN="dev-oapcbgti.us.auth0.com"
 const AUTH0_CALLBACK_URL=location.href
@@ -92,10 +90,7 @@ class App extends React.Component {
             <Route path="/card" component={CardPage}/>
             <Route path="/all-cards" component={AllCardsPage}/>
             <Route path="/profile" component={ProfilePage}/>
-<<<<<<< Updated upstream
-=======
             <Route path="/view-card" component={ViewCard}/>
->>>>>>> Stashed changes
             <Route component={Error}/>
           </Switch>
       </BrowserRouter>
