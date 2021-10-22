@@ -14,10 +14,10 @@ class Navigation extends React.Component {
       }
     
     logout() {
-    localStorage.removeItem("id_token");
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("profile");
-    location.reload();
+        localStorage.removeItem("id_token");
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("profile");
+        location.reload();
     }
 
     render(){
