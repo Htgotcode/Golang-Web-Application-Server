@@ -109,9 +109,9 @@ function Market() {
                                 <Card.Text>{card.rarity}</Card.Text>
                                 <Card.Text>${card.sellingprice}</Card.Text>
                                 <Card.Text>{card.uploadedAt}</Card.Text>
-                                <Button type ="submit" value="Add to cart" onClick={() => addToCart(card)}>Add to Cart</Button>
+                                <Button type ="submit" variant="success" value="Add to cart" onClick={() => addToCart(card)}>Add to Cart</Button>
                                 <span>      </span>
-                                <Button type ="submit" value="Delete" onClick={() => removeCard(card)}>Delete Card</Button>
+                                <Button type ="submit" variant="danger" value="Delete" onClick={() => removeCard(card)}>Delete Card</Button>
                                 </Card.Body>
                             </Card>  
                           </Col> 

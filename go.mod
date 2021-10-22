@@ -25,7 +25,6 @@ require (
 )
 
 require (
-	github.com/form3tech-oss/jwt-go v3.2.5+incompatible // indirect
 	github.com/go-stack/stack v1.8.1 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/klauspost/compress v1.13.6 // indirect
@@ -41,7 +40,7 @@ require (
 
 require (
 	github.com/auth0/go-jwt-middleware v1.0.1
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible
+	github.com/form3tech-oss/jwt-go v3.2.5+incompatible
 	github.com/go-playground/validator/v10 v10.9.0
 	github.com/joho/godotenv v1.4.0
 	golang.org/x/text v0.3.7 // indirect

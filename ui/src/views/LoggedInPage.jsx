@@ -1,4 +1,5 @@
 import React from 'react'
+import { App } from 'react-bootstrap-icons';
 import ReactGA from 'react-ga';
 import GetCards from '../components/Market';
 import CardPage from './CardPage';
@@ -34,10 +35,7 @@ class LoggedIn extends React.Component {
   
     render(){
         return(
-            <div className="container" >
-              <a onClick={this.logout}>Log out</a>
-                <CardPage />
-            </div>
+          <Button type ="submit" variant="danger" value="Delete" onClick={this.logout}>Delete Card</Button>
         );
     }
   }

@@ -14,6 +14,8 @@ import CartPage from './views/CartPage';
 import ProfilePage from './views/ProfilePage';
 import AllCardsPage from './views/AllCardsPage';
 import LoggedInPage from './views/LoggedInPage';
+import { Container } from 'react-bootstrap';
+import GetCards from './components/Market';
 const AUTH0_CLIENT_ID="xJpx6qZVNhbzuwsNse6gpcXt1oOjF1m6"
 const AUTH0_DOMAIN="dev-oapcbgti.us.auth0.com"
 const AUTH0_CALLBACK_URL=location.href
@@ -78,7 +80,13 @@ class App extends React.Component {
 
   render() {
     if (this.loggedIn) {
-      return <LoggedInPage />;
+      return (
+      <Container>
+        <Navigation />
+        <LoggedInPage />
+        <GetCards />
+      </Container>
+      )
     }
     return <HomePage />;
   }
